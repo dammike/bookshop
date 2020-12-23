@@ -8,8 +8,8 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @Data
 public abstract class NamedEntity extends BaseEntity {
-    @Column
+    @Column(nullable = false)
     private String firstName;
-    @Column
+    @Column(nullable = false)
     private String lastName;
 }

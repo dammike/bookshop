@@ -3,7 +3,6 @@ package com.dammike.bookstore.graemelee.model;
 import lombok.Data;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
 
 @Embeddable
 @Data

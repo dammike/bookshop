@@ -27,21 +27,39 @@ public class HoldingRequestServiceImpl implements HoldingRequestService {
             obj.setMember(holdingRequest.getMember());
             obj.setBookOfInterest(holdingRequest.getBookOfInterest());
             obj.setRequestedDate(new Date());
+            this.repository.save(obj);
+
+        } else {
+            try {
+                throw new Exception("No such holding request found for the given id: " + holdingRequest.getId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public void delete(HoldingRequest holdingRequest) {
+        Optional<HoldingRequest> optional = this.repository.findById(holdingRequest.getId());
+        if (optional.isPresent()) {
+            this.repository.delete(holdingRequest);
 
+        } else {
+            try {
+                throw new Exception("No such holding request found for the given id: " + holdingRequest.getId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public Optional<HoldingRequest> findById(Long id) {
-        return Optional.empty();
+        return this.repository.findById(id);
     }
 
     @Override
     public Collection<HoldingRequest> findAll() {
-        return null;
+        return this.repository.findAll();
     }
 }

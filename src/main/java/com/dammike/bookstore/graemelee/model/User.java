@@ -11,10 +11,11 @@ import java.util.Date;
 public abstract class User extends NamedEntity {
     private String username;
     private String password;
+    @Column(nullable = false, unique = true)
     private String email;
-    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date loggedIn;
-    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date loggedOut;
     @CreationTimestamp
     private Date joinedDate;

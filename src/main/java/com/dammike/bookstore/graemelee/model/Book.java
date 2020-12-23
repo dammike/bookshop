@@ -25,6 +25,7 @@ public class Book extends BaseEntity {
     private String ISBN;
     @Column(unique = true, nullable = false)
     private String title;
+    @Column(length = 1050)
     private String description;
     @Column(columnDefinition = "boolean default true")
     private boolean available;
