@@ -41,26 +41,12 @@ public class AdminService {
     }
 
     public Admin getAdminById(Long id) {
-        Optional<Admin> result = adminRepository.findById(id);
-        if (!result.isPresent()) {
-            try {
-                throw new Exception("No such admin by the specified ID: " + id);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return result.get();
+        Optional<Admin> optional = adminRepository.findById(id);
+        return optional.orElseThrow();
     }
 
     public Admin getAdminByEmail(String email) {
-        Optional<Admin> result = adminRepository.findByEmailContaining(email);
-        if (!result.isPresent()) {
-            try {
-                throw new Exception("No such admin by the specified email: " + email);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return result.get();
+        Optional<Admin> optional = adminRepository.findByEmailContaining(email);
+        return optional.orElseThrow();
     }
 }

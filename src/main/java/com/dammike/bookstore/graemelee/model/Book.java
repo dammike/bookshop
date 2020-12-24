@@ -13,10 +13,10 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class Book extends BaseEntity {
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "Book_Author",
-    joinColumns = @JoinColumn(name = "book_id"),
-    inverseJoinColumns = @JoinColumn(name = "author_id"))
+    joinColumns = @JoinColumn(name = "book_id", nullable = false, updatable = false),
+    inverseJoinColumns = @JoinColumn(name = "author_id", nullable = false, updatable = false))
     private Set<Author> authors = new HashSet<>();
     @ManyToOne
     private Publisher publisher;
@@ -27,6 +27,8 @@ public class Book extends BaseEntity {
     private String title;
     @Column(length = 1050)
     private String description;
+    @Column
+    private String shortSummary;
     @Column(columnDefinition = "boolean default true")
     private boolean available;
     private int pages;
@@ -34,13 +36,28 @@ public class Book extends BaseEntity {
     private int quantity;
     private BigDecimal price;
     @Temporal(TemporalType.DATE)
-    private Date dateIssued;
+    private Date publishDate;
 
-    @Embedded
+    @Enumerated(EnumType.STRING)
     private BookCondition bookCondition;
 
     public Book(String title) {
         setTitle(title);
+    }
+
+    public Book(Publisher publisher, String ISBN, String title, String description,
+                int pages, BigDecimal price,
+                Date publishDate, BookCondition bookCondition) {
+        this.publisher = publisher;
+        this.ISBN = ISBN;
+        this.title = title;
+        this.description = description;
+        this.available = available;
+        this.pages = pages;
+        this.quantity = quantity;
+        this.price = price;
+        this.publishDate = publishDate;
+        this.bookCondition = bookCondition;
     }
 }
 

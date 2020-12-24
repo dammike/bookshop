@@ -1,14 +1,14 @@
 package com.dammike.bookstore.graemelee.model;
 
-import javax.persistence.Embeddable;
-
-@Embeddable
-enum BookCondition {
+public enum BookCondition {
     POOR("have few marks and wear"),
     LIKE_NEW("in great shape and acceptable condition"),
     EXCELLENT("as good as new");
 
-    private final String status;
+    private String status;
+
+    BookCondition() {
+    }
 
     BookCondition(String status) {
         this.status = status;
