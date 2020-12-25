@@ -2,6 +2,7 @@ package com.dammike.bookstore.graemelee.web;
 
 import com.dammike.bookstore.graemelee.model.Publisher;
 import com.dammike.bookstore.graemelee.service.PublisherService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
+@Slf4j
 @RequestMapping("/publishers")
 public class PublisherController {
     @Autowired
@@ -35,6 +37,7 @@ public class PublisherController {
     @RequestMapping(method = RequestMethod.POST, value = "/save")
     public String savePublisher(@ModelAttribute("publisher") Publisher publisher) {
         publisherService.addPublisher(publisher);
+        log.debug("Persisted publisher[" + publisher.getId() + "]");
         return "redirect:/publishers/";
     }
 
@@ -50,6 +53,7 @@ public class PublisherController {
     @RequestMapping("/delete/{id}")
     public String deletePublisher(@PathVariable(name = "id") Long id) {
         publisherService.deletePublisher(id);
+        log.debug("Deleted publisher[" + id + "]");
         return "redirect:/publishers/";
     }
 }

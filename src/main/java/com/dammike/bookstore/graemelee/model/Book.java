@@ -1,5 +1,7 @@
 package com.dammike.bookstore.graemelee.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,17 +20,20 @@ public class Book extends BaseEntity {
     @JoinTable(name = "Book_Author",
     joinColumns = @JoinColumn(name = "book_id", nullable = false, updatable = false),
     inverseJoinColumns = @JoinColumn(name = "author_id", nullable = false, updatable = false))
+    @JsonBackReference
     private Set<Author> authors = new HashSet<>();
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "Book_Category",
     joinColumns = @JoinColumn(name = "book_id", nullable = false, updatable = false),
     inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false, updatable = true))
+    @JsonBackReference
     private List<Category> categories;
     @ManyToOne
     private Publisher publisher;
     @OneToOne(mappedBy = "book",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @JsonManagedReference
     private BookShelf storedLocation;
     @Column(unique = true, nullable = true)
     private String ISBN;

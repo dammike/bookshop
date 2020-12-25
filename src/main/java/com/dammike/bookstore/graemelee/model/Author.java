@@ -1,5 +1,7 @@
 package com.dammike.bookstore.graemelee.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import java.util.Set;
 @Data
 public class Author extends NamedEntity {
     @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Set<Book> books = new HashSet<>();
 
     public Author(String firstName, String lastName) {

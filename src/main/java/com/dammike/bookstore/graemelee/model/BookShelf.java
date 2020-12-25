@@ -1,5 +1,7 @@
 package com.dammike.bookstore.graemelee.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +17,7 @@ public class BookShelf extends BaseEntity {
     private Admin admin;
     @OneToOne(optional = false)
     @JoinColumn(name = "book_id")
+    @JsonBackReference
     private Book book;
     @Column(nullable = false)
     private String isle;
