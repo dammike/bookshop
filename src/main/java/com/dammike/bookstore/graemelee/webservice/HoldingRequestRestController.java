@@ -2,6 +2,7 @@ package com.dammike.bookstore.graemelee.webservice;
 
 import com.dammike.bookstore.graemelee.model.HoldingRequest;
 import com.dammike.bookstore.graemelee.service.HoldingRequestService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@Slf4j
 public class HoldingRequestRestController {
 
     @Autowired

@@ -2,12 +2,14 @@ package com.dammike.bookstore.graemelee.webservice;
 
 import com.dammike.bookstore.graemelee.model.Book;
 import com.dammike.bookstore.graemelee.service.BookService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
+@Slf4j
 public class BookRestController {
     @Autowired
     private BookService bookService;
