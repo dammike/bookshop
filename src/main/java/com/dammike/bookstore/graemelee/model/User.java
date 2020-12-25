@@ -9,6 +9,7 @@ import java.util.Date;
 @MappedSuperclass
 @Data
 public abstract class User extends NamedEntity {
+    @Column(unique = true)
     private String username;
     private String password;
     @Column(nullable = false, unique = true)

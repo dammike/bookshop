@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class AdminController {
+public class AdminRestController {
 
     @Autowired
     private AdminService adminService;

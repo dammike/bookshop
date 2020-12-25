@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,9 +19,17 @@ public class Book extends BaseEntity {
     joinColumns = @JoinColumn(name = "book_id", nullable = false, updatable = false),
     inverseJoinColumns = @JoinColumn(name = "author_id", nullable = false, updatable = false))
     private Set<Author> authors = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "Book_Category",
+    joinColumns = @JoinColumn(name = "book_id", nullable = false, updatable = false),
+    inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false, updatable = true))
+    private List<Category> categories;
     @ManyToOne
     private Publisher publisher;
-
+    @OneToOne(mappedBy = "book",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private BookShelf storedLocation;
     @Column(unique = true, nullable = true)
     private String ISBN;
     @Column(unique = true, nullable = false)

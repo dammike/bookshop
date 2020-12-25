@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class HoldingRequestController {
+public class HoldingRequestRestController {
 
     @Autowired
     private HoldingRequestService holdingRequestService;
