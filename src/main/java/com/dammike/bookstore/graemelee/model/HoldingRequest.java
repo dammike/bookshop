@@ -13,9 +13,9 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class HoldingRequest extends BaseEntity {
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Consumer member;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Book bookOfInterest;
     @CreationTimestamp
     private Date requestedDate;

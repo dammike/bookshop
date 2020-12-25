@@ -22,7 +22,7 @@ public abstract class User extends NamedEntity {
     @Lob
     private Object[] profilePhoto;
     @Column(columnDefinition = "boolean default false")
-    private boolean deactivated;
+    private boolean enabled;
 
     @Embedded
     private AddressDetails addressDetails;
