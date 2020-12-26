@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static.fa/css/all.css">
 </head>
 <body>
-<div align="center">
+<div class="container">
+
     <h1>Admin Info</h1>
-    <br/>
-    <a href="/admin/new">Add New Admin</a>
-    <table border="2" cellpadding="10px">
+    <a href="/admin/new">Create New Admin</a>
+    <table>
         <thead>
         <tr>
             <th>Name</th>
             <th>Joined</th>
             <th>email</th>
             <th>username</th>
-            <th colspan="2">address</th>
+            <th>address</th>
         </tr>
         </thead>
         <tbody>
@@ -25,7 +30,17 @@
             <td th:text="${admin.joinedDate}"/>
             <td th:text="${admin.email}"/>
             <td th:text="${admin.username}"/>
-            <td th:text="${admin.addressDetails}"/>
+            <td>
+                        <span th:each="address : ${admin.addressDetails}">
+                            <i th:text="${address.streetNumber}"/>,
+                            <i th:text="${address.streetName}"/>, <br/>
+                            <i th:text="${address.suburb}"/>
+                            <i th:text="${address.city}"/> <br/>
+                            <i th:text="${address.province}"/>
+                            <i th:text="${address.country}"/> <br/>
+                            <i th:text="${address.zipCode}"/> <br/>
+                        </span>
+            <td/>
             <td>
                 <a th:href="@{'/admin/edit/' + ${admin.id}}">Edit</a>
                 <a th:href="@{'/admin/delete/' + ${admin.id}}">Delete</a>
@@ -33,6 +48,9 @@
         </tr>
         </tbody>
     </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"></script>
 </div>
 </body>
 </html>

@@ -35,7 +35,7 @@ public abstract class User extends NamedEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date joinedDate;
     @Lob
-    private Object[] profilePhoto;
+    private Byte[] profilePhoto;
     @Column(columnDefinition = "boolean default true")
     private boolean enabled;
 
