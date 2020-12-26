@@ -17,7 +17,7 @@ public class BookShelf extends BaseEntity {
     private Admin admin;
     @OneToOne(optional = false)
     @JoinColumn(name = "book_id")
-    @JsonBackReference
+    @JsonBackReference(value = "bookshelf")
     private Book book;
     @Column(nullable = false)
     private String isle;

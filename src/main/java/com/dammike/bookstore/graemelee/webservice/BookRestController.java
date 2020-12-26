@@ -4,6 +4,7 @@ import com.dammike.bookstore.graemelee.model.Book;
 import com.dammike.bookstore.graemelee.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -32,7 +33,7 @@ public class BookRestController {
         bookService.createBook(book);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/books/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/books/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public void updateBook(@RequestBody Book book, @PathVariable Long id) {
         Book result = bookService.getBookById(id);
         result.setPublisher(book.getPublisher());

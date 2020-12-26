@@ -25,12 +25,12 @@ public class PublisherService {
     }
 
     public void deletePublisher(Long id) {
-        Publisher result = publisherRepository.findById(id).orElseThrow();
+        Publisher result = publisherRepository.findById(id).get();
         publisherRepository.delete(result);
     }
 
     public Publisher getPublisherById(Long id) {
-        return publisherRepository.findById(id).orElseThrow();
+        return publisherRepository.findById(id).get();
     }
 
     public List<Publisher> getAllPublishers() {

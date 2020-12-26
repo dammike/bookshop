@@ -1,5 +1,6 @@
 package com.dammike.bookstore.graemelee.webservice;
 
+import com.dammike.bookstore.graemelee.exception.ResourceNotFoundException;
 import com.dammike.bookstore.graemelee.model.HoldingRequest;
 import com.dammike.bookstore.graemelee.service.HoldingRequestService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,14 +38,22 @@ public class HoldingRequestRestController {
         holdingRequestService.save(request);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/holdingrequests/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/holdingrequests/{id}",
+    consumes = {MediaType.APPLICATION_JSON_VALUE},
+    produces = {MediaType.APPLICATION_JSON_VALUE})
     public void updateHoldingRequest(@RequestBody HoldingRequest holdingRequest, @PathVariable Long id) {
-        HoldingRequest result = holdingRequestService.findById(id);
+       /* HoldingRequest result = holdingRequestService.findById(id);
         result.setMember(holdingRequest.getMember());
         result.setRequestedDate(holdingRequest.getRequestedDate());
-        result.setBookOfInterest(holdingRequest.getBookOfInterest());
+        result.setBookOfInterest(holdingRequest.getBookOfInterest());*/
         //todo: more to implement here
-        holdingRequestService.save(result);
+
+        log.debug("Updating HoldingRequest: " + holdingRequest);
+        try {
+            holdingRequestService.update(holdingRequest);
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 

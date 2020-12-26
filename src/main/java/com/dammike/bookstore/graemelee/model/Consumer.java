@@ -1,5 +1,7 @@
 package com.dammike.bookstore.graemelee.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,11 +13,16 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        scope = Consumer.class)
 public class Consumer extends User {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
+
     @Column(columnDefinition = "boolean default false")
     private boolean clubMember;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Consumer_Category",
     joinColumns = {@JoinColumn(name = "consumer_id")},

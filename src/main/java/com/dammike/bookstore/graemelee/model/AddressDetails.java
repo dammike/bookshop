@@ -11,7 +11,7 @@ public class AddressDetails {
     private String streetName;
     private String suburb;
     private String city;
-    private String state;
+    private String province;
     private String zipCode;
     private String country;
 }
