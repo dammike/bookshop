@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -34,10 +35,6 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    public Book getBookById(Long id) {
-        Optional<Book> optional = bookRepository.findById(id);
-        return optional.orElseThrow();
-    }
     public Book getBookByTitle(String title) {
         Optional<Book> optional = bookRepository.findByTitleContaining(title);
         return optional.orElseThrow();
@@ -48,13 +45,23 @@ public class BookService {
         bookRepository.delete(result);
     }
 
+    public Book getBookById(Long id) {
+        Optional<Book> optional = bookRepository.findById(id);
+        return optional.orElseThrow();
+    }
+
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
         bookRepository.findAll().forEach(books::add);
        return books;
     }
 
-    public void addPublisher(Publisher publisher) {
-        publisherRepository.save(publisher);
+    public List<Publisher> getAllPublishersForBook(Book book) {
+        List<Publisher> publishers = new ArrayList<>();
+        publisherRepository.findAll().forEach(publishers::add);
+
+        return publishers.stream().filter(publisher ->
+                publisher.getId() == book.getPublisher().getId())
+                .collect(Collectors.toList());
     }
 }

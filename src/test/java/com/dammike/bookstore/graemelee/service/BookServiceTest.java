@@ -21,11 +21,13 @@ class BookServiceTest {
 
     @Autowired
     BookService bookService;
+    @Autowired
+    PublisherService publisherService;
 
     @BeforeEach
     public void setup() {
         Publisher publisher = new Publisher("Wiley Productions", "Produces great content for technology products");
-        bookService.addPublisher(publisher);
+        publisherService.save(publisher);
         Book book;
         book = new Book(publisher, "12345689", "How to get Rich", "Or die trying",
                 210, new BigDecimal(10.0), new Date(), BookCondition.LIKE_NEW);

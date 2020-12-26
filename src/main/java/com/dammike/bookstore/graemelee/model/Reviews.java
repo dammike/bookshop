@@ -17,4 +17,5 @@ public class Reviews extends BaseEntity {
     private String text;
     @CreationTimestamp
     private Date placedOn;
+    private int rating;
 }
