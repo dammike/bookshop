@@ -31,10 +31,10 @@ class BookServiceTest {
         Book book;
         book = new Book(publisher, "12345689", "How to get Rich", "Or die trying",
                 210, new BigDecimal(10.0), new Date(), BookCondition.LIKE_NEW);
-        bookService.createBook(book);
+        bookService.save(book);
         book = new Book(publisher, "992345455", "Eat healthy 40 steps", "Eating healthy",
                 210, new BigDecimal(10.0), new Date(), BookCondition.POOR);
-        bookService.createBook(book);
+        bookService.save(book);
     }
 
     @Test
@@ -58,7 +58,7 @@ class BookServiceTest {
     public void destroy() {
         Collection<Book> allBooks = bookService.getAllBooks();
         for (Book book : allBooks) {
-            bookService.deleteBook(book);
+            bookService.delete(book.getId());
         }
     }
 }

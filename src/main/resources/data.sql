@@ -4,6 +4,17 @@ INSERT INTO ADMIN(id, first_name, last_name, joined_date, email, username, passw
 VALUES (1, 'Graeme', 'Lee', '2015-06-05', 'james@email.com', 'jam22xx', 'pass',
         12, 'Bancroft tce', 'newlands', 'wellington CBD', 'Wellington', '6011', 'New Zealand');
 
+-- AUTHOR
+INSERT INTO AUTHOR(id, first_name, last_name)
+VALUES (1, 'James', 'Franko' );
+
+INSERT INTO AUTHOR(id, first_name, last_name)
+VALUES (2, 'Richy', 'Clark' );
+
+INSERT INTO AUTHOR(id, first_name, last_name)
+VALUES (3, 'Anna', 'Lovelace' );
+
+
 -- PUBLISHER
 INSERT INTO PUBLISHER(id, name, description)
 VALUES (1, 'Wiley Production', 'Lots of IT reference books');
@@ -16,7 +27,7 @@ VALUES (3, 'Audible publishing', 'Novels and stuff');
 
 -- CATEGORY
 INSERT INTO CATEGORY(id, name)
-VALUES(1, 'INFORMATION TECHNOLOGY');
+VALUES(1, 'IT');
 
 INSERT INTO CATEGORY(id, name)
 VALUES(2, 'LOVE AND ROMANCE');
@@ -25,11 +36,21 @@ INSERT INTO CATEGORY(id, name)
 VALUES(3, 'HEALTHY LIVING');
 
 -- BOOK
-INSERT INTO BOOK(id, title, short_summary, description, pages, publisher_id, isbn, price, book_condition)
-VALUES (1, 'Intro to Java book', '2nd edition', 'Dive in to learning java 8', 435, 1, '23423JIJI2', 20, 'LIKE_NEW');
+INSERT INTO BOOK(id, title, short_summary, description, pages, publisher_id, isbn, price, book_condition, publish_date)
+VALUES (1, 'Intro to Java book', '2nd edition', 'Dive in to learning java 8', 435, 1, '23423JIJI2', 20, 'LIKE_NEW', '2012-03-23');
 
 INSERT INTO BOOK(id, title, description, pages, publisher_id, isbn, price)
 VALUES (2, 'Jungle book', 'book about a boy', 334, 3, '443JJDFDF', 20);
+
+-- BOOK_AUTHOR
+INSERT INTO BOOK_AUTHOR(book_id, author_id)
+VALUES(1, 1);
+
+INSERT INTO BOOK_AUTHOR(book_id, author_id)
+VALUES(1, 3);
+
+INSERT INTO BOOK_AUTHOR(book_id, author_id)
+VALUES(2, 2);
 
 -- BOOK_CATEGORY
 INSERT INTO BOOK_CATEGORY(book_id, category_id)

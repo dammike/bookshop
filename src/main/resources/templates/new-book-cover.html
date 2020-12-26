@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div align="center">
+    <h1>Upload a new cover photo</h1>
+    <br/>
+    <form action="#" th:action="@{/book/cover/save}" th:object="${book}" th:method="post">
+        <input type="file" name="imageFile"/><br/><br/>
+        <input type="submit" value="submit"/>
+    </form>
+</div>
+</body>
+</html>

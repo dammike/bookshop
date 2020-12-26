@@ -22,14 +22,14 @@ public class Book extends BaseEntity {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "Book_Author",
     joinColumns = @JoinColumn(name = "book_id", nullable = false, updatable = false),
-    inverseJoinColumns = @JoinColumn(name = "author_id", nullable = false, updatable = false))
+        inverseJoinColumns = @JoinColumn(name = "author_id", nullable = false, updatable = false))
     private Set<Author> authors = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "Book_Category",
     joinColumns = @JoinColumn(name = "book_id", nullable = false, updatable = false),
-            inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false))
-    private List<Category> categories = new ArrayList<>();
+        inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false, updatable = false))
+    private Set<Category> categories = new HashSet<>();
 
     @ManyToOne
     private Publisher publisher;
@@ -38,7 +38,7 @@ public class Book extends BaseEntity {
     @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private BookShelf bookShelf;
 
-    @Column(unique = true, nullable = true)
+    @Column(unique = true)
     private String ISBN;
     @Column(unique = true, nullable = false)
     private String title;
@@ -54,6 +54,8 @@ public class Book extends BaseEntity {
     private BigDecimal price;
     @Temporal(TemporalType.DATE)
     private Date publishDate;
+    @Lob
+    private Byte[] coverImage;
     @Enumerated(EnumType.STRING)
     private BookCondition bookCondition;
 

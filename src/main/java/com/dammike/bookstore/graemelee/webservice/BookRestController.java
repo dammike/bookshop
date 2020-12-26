@@ -31,7 +31,7 @@ public class BookRestController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/books")
     public void addBook(@RequestBody Book book) {
-        bookService.createBook(book);
+        bookService.save(book);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/books/{id}",
@@ -44,7 +44,6 @@ public class BookRestController {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/books/{id}")
     public void deleteBook(@PathVariable Long id) {
-        Book result = bookService.getBookById(id);
-        bookService.deleteBook(result);
+        bookService.delete(id);
     }
 }
