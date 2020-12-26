@@ -1,15 +1,15 @@
 package com.dammike.bookstore.graemelee.service;
 
-import com.dammike.bookstore.graemelee.model.Consumer;
 import com.dammike.bookstore.graemelee.model.HoldingRequest;
 import com.dammike.bookstore.graemelee.repository.HoldingRequestRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 public class HoldingRequestService {
     @Autowired
     private HoldingRequestRepository holdingRequestRepository;
@@ -19,11 +19,8 @@ public class HoldingRequestService {
     }
 
     public void update(HoldingRequest holdingRequest) {
-        HoldingRequest result = holdingRequestRepository.findById(holdingRequest.getId()).orElseThrow();
-        result.setBookOfInterest(holdingRequest.getBookOfInterest());
-        result.setRequestedDate(new Date());
-        result.setMember(holdingRequest.getMember());
-        holdingRequestRepository.save(result);
+        log.debug("Updating HoldingRequest: " + holdingRequest.getId());
+        holdingRequestRepository.save(holdingRequest);
     }
 
     public void delete(Long id) {

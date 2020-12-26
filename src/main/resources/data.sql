@@ -1,6 +1,8 @@
 -- ADMIN
-INSERT INTO ADMIN(id, first_name, last_name, email, username, password)
-VALUES (1, 'Graeme', 'Lee', 'james@email.com', 'jam22xx', 'pass');
+INSERT INTO ADMIN(id, first_name, last_name, joined_date, email, username, password,
+                  street_number, street_name, suburb, city, province, zip_code, country)
+VALUES (1, 'Graeme', 'Lee', '2015-06-05', 'james@email.com', 'jam22xx', 'pass',
+        12, 'Bancroft tce', 'newlands', 'wellington CBD', 'Wellington', '6011', 'New Zealand');
 
 -- PUBLISHER
 INSERT INTO PUBLISHER(id, name, description)
@@ -23,8 +25,8 @@ INSERT INTO CATEGORY(id, name)
 VALUES(3, 'HEALTHY LIVING');
 
 -- BOOK
-INSERT INTO BOOK(id, title, short_summary, description, pages, publisher_id, isbn, price)
-VALUES (1, 'Intro to Java book', '2nd edition', 'Dive in to learning java 8', 435, 1, '23423JIJI2', 20);
+INSERT INTO BOOK(id, title, short_summary, description, pages, publisher_id, isbn, price, book_condition)
+VALUES (1, 'Intro to Java book', '2nd edition', 'Dive in to learning java 8', 435, 1, '23423JIJI2', 20, 'LIKE_NEW');
 
 INSERT INTO BOOK(id, title, description, pages, publisher_id, isbn, price)
 VALUES (2, 'Jungle book', 'book about a boy', 334, 3, '443JJDFDF', 20);
@@ -41,8 +43,10 @@ VALUES(1, 2);
 
 
 -- CONSUMER
-INSERT INTO CONSUMER(id, first_name, last_name, email, username, password)
-VALUES (1, 'Dominik', 'Selchert', 'dominiksch@email.com', 'dee123', 'pass');
+INSERT INTO CONSUMER(id, first_name, last_name, email, username, password,
+                     street_number, street_name, suburb, city, zip_code, country)
+VALUES (1, 'Dominik', 'Selchert', 'dominiksch@email.com', 'dee123', 'pass',
+        12, 'Bancroft tce', 'newlands', 'wellington', 'a22ds2', 'New Zealand');
 
 INSERT INTO CONSUMER(id, first_name, last_name, email, username, password)
 VALUES (2, 'Sarah', 'Frank', 'sarry@email.com', 'sarah', 'pass');
@@ -59,5 +63,5 @@ INSERT INTO COMMENTS(id, book_id, consumer_id, comment, commented_time, admin_re
 VALUES (1, 2, 2, 'This was a fabulous book. 5 stars!!!', '2020-11-19', 'Thank you for your review!');
 
 -- BOOK_SHELF
-INSERT INTO BOOK_SHELF(id, book_id, admin_id, isle, shelf_column, shelf_row)
-VALUES (1, 1, 1, 'non-fiction', 'SHELF-COLUMN#12', 'ROW#5');
+INSERT INTO BOOK_SHELF(id, book_id, admin_id, isle, shelf_column, shelf_row, last_updated)
+VALUES (1, 1, 1, 'non-fiction', 'SHELF-COLUMN#12', 'ROW#5', '2019-02-07');

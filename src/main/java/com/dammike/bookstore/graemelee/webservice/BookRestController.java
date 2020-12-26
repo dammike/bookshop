@@ -4,12 +4,15 @@ import com.dammike.bookstore.graemelee.model.Book;
 import com.dammike.bookstore.graemelee.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @Slf4j
+@RequestMapping("/api")
 public class BookRestController {
     @Autowired
     private BookService bookService;
@@ -31,16 +34,12 @@ public class BookRestController {
         bookService.createBook(book);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/books/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/books/{id}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
     public void updateBook(@RequestBody Book book, @PathVariable Long id) {
-        Book result = bookService.getBookById(id);
-        result.setPublisher(book.getPublisher());
-        result.setTitle(book.getTitle());
-        result.setDescription(book.getDescription());
-        result.setPublishDate(book.getPublishDate());
-        result.setPages(book.getPages());
-        //todo: more implementations
-        bookService.createBook(result);
+        log.debug("Updating Book: " + book);
+        bookService.updateBook(book);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/books/{id}")

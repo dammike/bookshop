@@ -23,15 +23,8 @@ public class AdminService {
     }
 
     public void deleteAdmin(Long id) {
-        Optional<Admin> admin = adminRepository.findById(id);
-        if (!admin.isPresent()) {
-            try {
-                throw new Exception("No such admin by the specified ID: " + id);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        adminRepository.delete(admin.get());
+        Admin admin = adminRepository.findById(id).get();
+        adminRepository.delete(admin);
     }
 
     public List<Admin> getAllAdmins() {
@@ -41,8 +34,8 @@ public class AdminService {
     }
 
     public Admin getAdminById(Long id) {
-        Optional<Admin> optional = adminRepository.findById(id);
-        return optional.orElseThrow();
+        Admin admin = adminRepository.findById(id).get();
+        return admin;
     }
 
     public Admin getAdminByEmail(String email) {

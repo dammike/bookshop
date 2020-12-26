@@ -2,6 +2,7 @@ package com.dammike.bookstore.graemelee.service;
 
 import com.dammike.bookstore.graemelee.model.Consumer;
 import com.dammike.bookstore.graemelee.repository.ConsumerRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ConsumerService {
     @Autowired
     private ConsumerRepository consumerRepository;
@@ -18,12 +20,8 @@ public class ConsumerService {
     }
 
     public void updateConsumer(Consumer consumer) {
-        Consumer result = consumerRepository.findById(consumer.getId()).orElseThrow();
-        result.setFirstName(consumer.getFirstName());
-        result.setLastName(consumer.getLastName());
-        result.setClubMember(consumer.isClubMember());
-        //todo: more to follow
-        consumerRepository.save(result);
+        log.debug("Updating consumer: " + consumer.getId());
+        consumerRepository.save(consumer);
     }
 
     public void deleteConsumer(Long id) {

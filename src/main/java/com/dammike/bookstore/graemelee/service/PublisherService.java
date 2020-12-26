@@ -2,6 +2,7 @@ package com.dammike.bookstore.graemelee.service;
 
 import com.dammike.bookstore.graemelee.model.Publisher;
 import com.dammike.bookstore.graemelee.repository.PublisherRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class PublisherService {
     @Autowired
     private PublisherRepository publisherRepository;
@@ -18,19 +20,17 @@ public class PublisherService {
     }
 
     public void updatePublisher(Publisher publisher) {
-        Publisher result = publisherRepository.findById(publisher.getId()).orElseThrow();
-        result.setName(publisher.getName());
-        result.setDescription(publisher.getDescription());
-        publisherRepository.save(result);
+        log.debug("Updating publisher: "+ publisher.getId());
+        publisherRepository.save(publisher);
     }
 
     public void deletePublisher(Long id) {
-        Publisher result = publisherRepository.findById(id).orElseThrow();
+        Publisher result = publisherRepository.findById(id).get();
         publisherRepository.delete(result);
     }
 
     public Publisher getPublisherById(Long id) {
-        return publisherRepository.findById(id).orElseThrow();
+        return publisherRepository.findById(id).get();
     }
 
     public List<Publisher> getAllPublishers() {

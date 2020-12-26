@@ -4,12 +4,16 @@ import com.dammike.bookstore.graemelee.model.Book;
 import com.dammike.bookstore.graemelee.model.Publisher;
 import com.dammike.bookstore.graemelee.repository.BookRepository;
 import com.dammike.bookstore.graemelee.repository.PublisherRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
+@Slf4j
 public class BookService {
 
     private final BookRepository bookRepository;
@@ -25,21 +29,9 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public Book updateBook(Book book) {
-        Optional<Book> optional = bookRepository.findById(book.getId());
-        Book result = optional.orElseThrow();
-            result.setISBN(book.getISBN());
-            result.setTitle(book.getTitle());
-            result.setDescription(book.getDescription());
-            result.setAvailable(book.isAvailable());
-            result.setPages(book.getPages());
-            result.setQuantity(book.getQuantity());
-            result.setPrice(book.getPrice());
-        result.setPublishDate(book.getPublishDate());
-
-        bookRepository.save(result);
-
-        return result;
+    public void updateBook(Book book) {
+        log.debug("Updating Book: " + book.getId());
+        bookRepository.save(book);
     }
 
     public Book getBookById(Long id) {

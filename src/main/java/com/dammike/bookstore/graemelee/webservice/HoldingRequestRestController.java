@@ -4,6 +4,7 @@ import com.dammike.bookstore.graemelee.model.HoldingRequest;
 import com.dammike.bookstore.graemelee.service.HoldingRequestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,12 +12,15 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@RequestMapping("/api")
 public class HoldingRequestRestController {
 
     @Autowired
     private HoldingRequestService holdingRequestService;
 
-    @RequestMapping(value = {"/holdingrequests", "/holdingrequests/{id}"})
+    @RequestMapping(value = {"/holdingrequests", "/holdingrequests/{id}"},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
     public List<HoldingRequest> getAllHoldingRequests(@PathVariable(required = false) Long id) {
         List<HoldingRequest> admins = new ArrayList<>();
         if (id == null) {
@@ -33,14 +37,12 @@ public class HoldingRequestRestController {
         holdingRequestService.save(request);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/holdingrequests/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/holdingrequests/{id}",
+    consumes = {MediaType.APPLICATION_JSON_VALUE},
+    produces = {MediaType.APPLICATION_JSON_VALUE})
     public void updateHoldingRequest(@RequestBody HoldingRequest holdingRequest, @PathVariable Long id) {
-        HoldingRequest result = holdingRequestService.findById(id);
-        result.setMember(holdingRequest.getMember());
-        result.setRequestedDate(holdingRequest.getRequestedDate());
-        result.setBookOfInterest(holdingRequest.getBookOfInterest());
-        //todo: more to implement here
-        holdingRequestService.save(result);
+        log.debug("Updating HoldingRequest: " + holdingRequest);
+        holdingRequestService.update(holdingRequest);
     }
 
 
@@ -48,5 +50,4 @@ public class HoldingRequestRestController {
     public void deleteHoldingRequest(@PathVariable Long id) {
         holdingRequestService.delete(id);
     }
-
 }
