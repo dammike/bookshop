@@ -2,6 +2,7 @@ package com.dammike.bookstore.graemelee.model;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +20,7 @@ public abstract class User extends NamedEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date loggedOut;
     @CreationTimestamp
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date joinedDate;
     @Lob
     private Object[] profilePhoto;

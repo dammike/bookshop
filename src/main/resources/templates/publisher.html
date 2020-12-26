@@ -8,7 +8,7 @@
 <div align="center">
     <h1>Publisher Info</h1>
     <br/>
-    <a href="/publishers/new">Add New Publisher</a>
+    <a href="/publisher/new">Add New Publisher</a>
     <table border="2" cellpadding="10px">
         <thead>
         <tr>
@@ -21,8 +21,8 @@
             <td th:text="${publisher.name}"/>
             <td th:text="${publisher.description}"/>
             <td>
-                <a th:href="@{'/publishers/edit/' + ${publisher.id}}">Edit</a>
-                <a th:href="@{'/publishers/delete/' + ${publisher.id}}">Delete</a>
+                <a th:href="@{'/publisher/edit/' + ${publisher.id}}">Edit</a>
+                <a th:href="@{'/publisher/delete/' + ${publisher.id}}">Delete</a>
             </td>
         </tr>
         </tbody>

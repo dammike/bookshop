@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<div align="center">
+    <h1>Admin Info</h1>
+    <br/>
+    <a href="/admin/new">Add New Admin</a>
+    <table border="2" cellpadding="10px">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Joined</th>
+            <th>email</th>
+            <th>username</th>
+            <th colspan="2">address</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="admin : ${admins}">
+            <td th:text="${admin.firstName} + ' ' + ${admin.lastName}"/>
+            <td th:text="${admin.joinedDate}"/>
+            <td th:text="${admin.email}"/>
+            <td th:text="${admin.username}"/>
+            <td th:text="${admin.addressDetails}"/>
+            <td>
+                <a th:href="@{'/admin/edit/' + ${admin.id}}">Edit</a>
+                <a th:href="@{'/admin/delete/' + ${admin.id}}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

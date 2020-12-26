@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @Slf4j
-@RequestMapping("/publishers")
+@RequestMapping("/publisher")
 public class PublisherController {
     @Autowired
     private PublisherService publisherService;
@@ -38,7 +38,7 @@ public class PublisherController {
     public String savePublisher(@ModelAttribute("publisher") Publisher publisher) {
         publisherService.addPublisher(publisher);
         log.debug("Persisted publisher[" + publisher.getId() + "]");
-        return "redirect:/publishers/";
+        return "redirect:/publisher/";
     }
 
 
@@ -54,6 +54,6 @@ public class PublisherController {
     public String deletePublisher(@PathVariable(name = "id") Long id) {
         publisherService.deletePublisher(id);
         log.debug("Deleted publisher[" + id + "]");
-        return "redirect:/publishers/";
+        return "redirect:/publisher/";
     }
 }
