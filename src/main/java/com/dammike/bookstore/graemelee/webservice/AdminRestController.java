@@ -31,7 +31,7 @@ public class AdminRestController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/admins")
     public void addAdmin(@RequestBody Admin admin) {
-        adminService.addAdmin(admin);
+        adminService.save(admin);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/admins/{id}")
@@ -42,11 +42,11 @@ public class AdminRestController {
         result.setEmail(admin.getEmail());
         result.setUsername(admin.getUsername());
         //todo: more mutators to be implemented here
-        adminService.updateAdmin(result);
+        adminService.update(result);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/admins/{id}")
     public void deleteAdmin(@PathVariable Long id) {
-        adminService.deleteAdmin(id);
+        adminService.delete(id);
     }
 }

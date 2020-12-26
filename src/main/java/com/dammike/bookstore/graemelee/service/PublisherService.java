@@ -15,7 +15,7 @@ public class PublisherService {
     @Autowired
     private PublisherRepository publisherRepository;
 
-    public void addPublisher(Publisher publisher) {
+    public void save(Publisher publisher) {
         publisherRepository.save(publisher);
     }
 
@@ -24,7 +24,7 @@ public class PublisherService {
         publisherRepository.save(publisher);
     }
 
-    public void deletePublisher(Long id) {
+    public void delete(Long id) {
         Publisher result = publisherRepository.findById(id).get();
         publisherRepository.delete(result);
     }

@@ -14,15 +14,15 @@ public class AdminService {
     @Autowired
     private AdminRepository adminRepository;
 
-    public void addAdmin(Admin admin) {
+    public void save(Admin admin) {
         adminRepository.save(admin);
     }
 
-    public void updateAdmin(Admin admin) {
+    public void update(Admin admin) {
         adminRepository.save(admin);
     }
 
-    public void deleteAdmin(Long id) {
+    public void delete(Long id) {
         Admin admin = adminRepository.findById(id).get();
         adminRepository.delete(admin);
     }

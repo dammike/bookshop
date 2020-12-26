@@ -6,12 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -37,11 +39,18 @@ public class AdminController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String saveAdmin(@ModelAttribute("admin") Admin admin) {
-        adminService.addAdmin(admin);
+    public String saveAdmin(@Valid @ModelAttribute("admin") Admin admin, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            if(admin.getId() != null) {
+                return "edit_admin_form";
+            }
+            return "new_admin_form";
+        }
+
         if (admin.getJoinedDate() == null) {
             admin.setJoinedDate(new Date());
         }
+        adminService.save(admin);
         log.debug("Saved Admin[" + admin.getId() + "]");
         return "redirect:/admin/";
     }
@@ -57,7 +66,7 @@ public class AdminController {
 
     @RequestMapping("/delete/{id}")
     public String deleteAdmin(@PathVariable(name = "id") Long id) {
-        adminService.deleteAdmin(id);
+        adminService.delete(id);
         log.debug("Deleted Admin[" + id + "]");
         return "redirect:/admin/";
     }

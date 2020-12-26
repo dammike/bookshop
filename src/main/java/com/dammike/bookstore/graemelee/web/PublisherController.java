@@ -6,12 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -35,9 +37,15 @@ public class PublisherController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String savePublisher(@ModelAttribute("publisher") Publisher publisher) {
-        publisherService.addPublisher(publisher);
-        log.debug("Persisted publisher[" + publisher.getId() + "]");
+    public String savePublisher(@Valid @ModelAttribute("publisher") Publisher publisher, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            if(publisher.getId() != null) {
+                return "edit_publisher_form";
+            }
+            return "new_publisher_form";
+        }
+        publisherService.save(publisher);
+        log.debug("Saved Publisher[" + publisher.getId() + "]");
         return "redirect:/publisher/";
     }
 
@@ -52,7 +60,7 @@ public class PublisherController {
 
     @RequestMapping("/delete/{id}")
     public String deletePublisher(@PathVariable(name = "id") Long id) {
-        publisherService.deletePublisher(id);
+        publisherService.delete(id);
         log.debug("Deleted publisher[" + id + "]");
         return "redirect:/publisher/";
     }

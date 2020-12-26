@@ -21,9 +21,9 @@ class AdminServiceTest {
     public void setup() {
         Admin admin;
         admin = new Admin("Jlain", "Farqhuar", "jfk234", "nuggets", "farq@email.com");
-        this.adminService.addAdmin(admin);
+        this.adminService.save(admin);
         admin = new Admin("James", "Clark", "fff", "111", "dom@gmail.com");
-        this.adminService.addAdmin(admin);
+        this.adminService.save(admin);
     }
 
     @Test
@@ -38,7 +38,7 @@ class AdminServiceTest {
     public void testUpdatingAdmins() {
         Admin admin = adminService.getAdminByEmail("farq@email.com");
         admin.setEmail("something@yahoo.com");
-        adminService.updateAdmin(admin);
+        adminService.update(admin);
         assertThrows(Exception.class, () -> {
             adminService.getAdminByEmail("farq@email.com");
         });
@@ -51,7 +51,7 @@ class AdminServiceTest {
         Admin admin;
         admin = adminService.getAdminByEmail("dom@gmail.com");
         assertNotNull(admin);
-        adminService.deleteAdmin(admin.getId());
+        adminService.delete(admin.getId());
         assertThrows(Exception.class, () -> {
             adminService.getAdminByEmail("dom@gmail.com");
         });
@@ -60,7 +60,7 @@ class AdminServiceTest {
     @AfterEach
     public void destroy() {
         adminService.getAllAdmins().forEach(admin -> {
-            adminService.deleteAdmin(admin.getId());
+            adminService.delete(admin.getId());
         });
     }
 }

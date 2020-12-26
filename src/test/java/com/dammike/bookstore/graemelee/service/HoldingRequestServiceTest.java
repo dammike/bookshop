@@ -40,7 +40,7 @@ class HoldingRequestServiceTest {
         member = new Consumer("Alex", "Riley", "dee@dee.com", new Date(), true);
         consumerService.createConsumer(member);
         Publisher publisher = new Publisher("WIley's productions", "Good IT books");
-        publisherService.addPublisher(publisher);
+        publisherService.save(publisher);
         book = new Book(publisher, "JOJOJ223232", "Jungle Book", "Book about a jungle boy", 400,
                 new BigDecimal(21), new Date(), BookCondition.EXCELLENT);
         bookService.createBook(book);
@@ -70,7 +70,7 @@ class HoldingRequestServiceTest {
             bookService.deleteBook(b);
         });
         publisherService.getAllPublishers().forEach(p -> {
-            publisherService.deletePublisher(p.getId());
+            publisherService.delete(p.getId());
         });
     }
 }

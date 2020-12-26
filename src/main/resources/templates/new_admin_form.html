@@ -13,23 +13,31 @@
             <tbody>
             <tr>
                 <th>First Name</th>
-                <td><input type="text" th:field="*{firstName}"/></td>
-                <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</td>
+                <td>
+                    <input type="text" th:field="*{firstName}"/>
+                    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>
+                </td>
             </tr>
             <tr>
                 <th>Last Name</th>
-                <td><input type="text" th:field="*{lastName}"/></td>
-                <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</td>
+                <td>
+                    <input type="text" th:field="*{lastName}"/>
+                    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span>
+                </td>
             </tr>
             <tr>
                 <th>Username</th>
-                <td><input type="text" th:field="*{username}"/></td>
-                <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</td>
+                <td>
+                    <input type="text" th:field="*{username}"/>
+                    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>
+                </td>
             </tr>
             <tr>
                 <th>Email</th>
-                <td><input type="text" th:field="*{email}"/></td>
-                <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</td>
+                <td>
+                    <input type="text" th:field="*{email}"/>
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+                </td>
             </tr>
             <tr>
                 <td>
