@@ -46,10 +46,6 @@ public class AdminController {
             }
             return "new_admin_form";
         }
-
-        if (admin.getJoinedDate() == null) {
-            admin.setJoinedDate(new Date());
-        }
         adminService.save(admin);
         log.debug("Saved Admin[" + admin.getId() + "]");
         return "redirect:/admin/";

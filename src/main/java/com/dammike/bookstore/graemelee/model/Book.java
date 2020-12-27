@@ -6,11 +6,16 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -18,21 +23,22 @@ import java.util.*;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id",
         scope = Book.class)
-@EqualsAndHashCode(exclude = {"authors", "categories", "publisher", "bookShelf"}, callSuper = false)
+@EqualsAndHashCode(exclude = {"authors", "categories", "publisher", "bookShelf"}, callSuper = true)
+@ToString(exclude = {"authors", "categories", "publisher", "bookShelf"}, callSuper = true)
 public class Book extends BaseEntity {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "Book_Author",
-    joinColumns = @JoinColumn(name = "book_id", nullable = false, updatable = false),
-        inverseJoinColumns = @JoinColumn(name = "author_id", nullable = false, updatable = false))
+            joinColumns = @JoinColumn(name = "book_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "author_id", nullable = false))
     private Set<Author> authors = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "Book_Category",
-    joinColumns = @JoinColumn(name = "book_id", nullable = false, updatable = false),
-        inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false, updatable = false))
+            joinColumns = @JoinColumn(name = "book_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false))
     private Set<Category> categories = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Publisher.class, cascade = CascadeType.PERSIST)
     private Publisher publisher;
 
     @JsonManagedReference(value = "bookshelf")
@@ -40,11 +46,13 @@ public class Book extends BaseEntity {
     private BookShelf bookShelf;
 
     @Column(unique = true)
-    private String ISBN;
+    private String isbn;
+    @NotEmpty(message = "Title Cannot be Blank")
+    @Size(min = 2, message = "Please Enter a Valid Title")
     @Column(unique = true, nullable = false)
     private String title;
     @Column(length = 1050)
-    private String description;
+    private String summary;
     @Column
     private String shortSummary;
     @Column(columnDefinition = "boolean default true")
@@ -54,25 +62,27 @@ public class Book extends BaseEntity {
     private int quantity;
     private BigDecimal price;
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date publishDate;
+    @DateTimeFormat(pattern = "yyyy")
+    private Date published;
     @Lob
     private Byte[] coverImage;
     @Enumerated(EnumType.STRING)
     private BookCondition bookCondition;
+    @Version
+    @Column(name = "VERSION")
+    private Long version = 0L;
 
 
-    public Book(Publisher publisher, String ISBN, String title, String description,
-                int pages, BigDecimal price, Date publishDate, BookCondition bookCondition) {
+    public Book(Publisher publisher, String isbn, String title, String summary,
+                int pages, BigDecimal price, Date published, BookCondition bookCondition) {
         this.publisher = publisher;
-        this.ISBN = ISBN;
+        this.isbn = isbn;
         this.title = title;
-        this.description = description;
+        this.summary = summary;
         this.pages = pages;
         this.price = price;
-        this.publishDate = publishDate;
+        this.published = published;
         this.bookCondition = bookCondition;
     }
 }
-
 

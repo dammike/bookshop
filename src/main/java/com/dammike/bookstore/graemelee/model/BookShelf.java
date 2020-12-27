@@ -15,7 +15,7 @@ public class BookShelf extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Admin.class,
             optional = false)
     private Admin admin;
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY, targetEntity = Book.class)
     @JoinColumn(name = "book_id")
     @JsonBackReference(value = "bookshelf")
     private Book book;
