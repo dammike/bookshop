@@ -48,8 +48,8 @@ public class BookService {
     }
 
     public Book getBookById(Long id) {
-        Optional<Book> optional = bookRepository.findById(id);
-        return optional.orElseThrow();
+        Book book = bookRepository.findById(id).orElseThrow();
+        return book;
     }
 
     public List<Book> getAllBooks() {

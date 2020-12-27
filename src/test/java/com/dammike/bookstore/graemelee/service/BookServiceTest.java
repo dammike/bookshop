@@ -40,7 +40,7 @@ class BookServiceTest {
     @Test
     public void testAddingBook() {
         assertEquals(2, bookService.getAllBooks().size());
-        assertEquals("992345455", bookService.getAllBooks().get(1).getISBN());
+        assertEquals("992345455", bookService.getAllBooks().get(1).getIsbn());
         assertEquals(BookCondition.POOR, bookService.getAllBooks().get(1).getBookCondition());
     }
 

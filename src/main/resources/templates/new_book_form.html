@@ -6,15 +6,11 @@
 </head>
 <body>
 <div align="center">
-    <h1>Book Details</h1>
+    <h1>Create New Book</h1>
     <br/><br/>
     <form action="#" th:action="@{/book/save}" th:object="${book}" method="post">
         <table border="2" cellpadding="10px">
             <tbody>
-            <tr>
-                <th>ID</th>
-                <th><input type="text" th:field="*{id}" readonly/></th>
-            </tr>
             <tr>
                 <th>Title</th>
                 <td><input type="text" th:field="*{title}"/></td>

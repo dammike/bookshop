@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Book Inventory</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/book/}">Book Inventory</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
@@ -44,6 +44,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" th:href="@{/admin/}">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/publisher/}">Publisher</a>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -71,6 +74,7 @@
                     <th>Categories</th>
                     <th>Publish Date</th>
                     <th>Days since last borrowed</th>
+                    <th>&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -87,7 +91,7 @@
                         </span>
                     <td/>
                     <td th:text="${book.publishDate}"/>
-                    <td th:text="${null}"/>
+                    <td th:text="0"/>
                     <td>
                         <i class="fas fa-user-edit"></i>
                             <a th:href="@{'/book/edit/' + ${book.id}}">Edit</a>
@@ -100,7 +104,16 @@
             </table>
         </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css"
+          rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.selectpicker').selectpicker();
+        });
+    </script>
 </div>
 </body>
 </html>
