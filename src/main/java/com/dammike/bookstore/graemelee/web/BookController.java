@@ -69,6 +69,7 @@ public class BookController {
         Book book = bookService.getBookById(id);
         log.debug("Ready to edit Book[" + book.getId() + "]");
         mv.addObject("book", book);
+        mv.addObject("categoryList", bookService.getAllCategories());
         mv.addObject("authorList", bookService.getAllAuthors());
         return mv;
     }

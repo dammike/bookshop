@@ -42,6 +42,21 @@
             <input type="hidden" th:field="*{id}"/>
             <input type="hidden" th:field="*{version}"/>
         </div>
+        <div class="form-group" th:object="${categoryList}">
+            <label th:for="mul-select">Current Categories</label>
+            <span th:each="category : ${book.categories}">
+                <small>
+                    <b><i th:text="${category.name}"/></b>
+                    <i th:if="${categoryStat != categoryStat.size} ? ', ' : 'None.'"/>
+                </small>
+            </span>
+
+            <select class="form-control mul-select" id="categories" multiple="true" name="categories">
+                <option th:each="category: ${categoryList}"
+                        th:text="${category.name}"
+                        th:value="${category.id}"></option>
+            </select>
+        </div>
         <div class="form-group">
             <label for="isbn">ISBN</label>
             <input class="form-control" id="isbn" name="isbn" th:field="*{isbn}" type="text"/>
@@ -131,7 +146,7 @@
                 });
 
                 $(".mul-select").select2({
-                    placeholder: "select category",
+                    placeholder: "Please Select...",
                     tags: false,
                     tokenSeparators: ['/', ',', ';', " "],
                     maximumSelectionLength: 7,

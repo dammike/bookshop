@@ -54,7 +54,7 @@
             <input class="form-control" id="title" placeholder="Book title" th:field="*{title}" type="text"/>
             <small class="bg-danger" th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></small>
         </div>
-        <div class="form-group" th:object="${categoryList}">
+        <div class="form-group" th:object="${authorList}">
             <label th:for="mul-select">Author(s)</label>
             <select class="form-control mul-select" id="authors" multiple="true" name="authors">
                 <option th:each="author: ${authorList}"
