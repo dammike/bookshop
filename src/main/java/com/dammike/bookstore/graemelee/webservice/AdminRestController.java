@@ -36,13 +36,7 @@ public class AdminRestController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/admins/{id}")
     public void updateAdmin(@RequestBody Admin admin, @PathVariable Long id) {
-        Admin result = adminService.getAdminById(id);
-        result.setFirstName(admin.getFirstName());
-        result.setLastName(admin.getLastName());
-        result.setEmail(admin.getEmail());
-        result.setUsername(admin.getUsername());
-        //todo: more mutators to be implemented here
-        adminService.update(result);
+        adminService.save(admin);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/admins/{id}")

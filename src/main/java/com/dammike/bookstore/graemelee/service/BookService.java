@@ -39,11 +39,6 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public void updateBook(Book book) {
-        log.debug("Updating Book: " + book.getId());
-        bookRepository.save(book);
-    }
-
     public Book getBookByTitle(String title) {
         Optional<Book> optional = bookRepository.findByTitleContaining(title);
         return optional.orElseThrow();

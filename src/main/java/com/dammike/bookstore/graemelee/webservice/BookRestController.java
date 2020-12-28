@@ -39,7 +39,7 @@ public class BookRestController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public void updateBook(@RequestBody Book book, @PathVariable Long id) {
         log.debug("Updating Book: " + book);
-        bookService.updateBook(book);
+        bookService.save(book);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/books/{id}")
