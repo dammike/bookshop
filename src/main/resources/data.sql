@@ -41,8 +41,8 @@ INSERT INTO BOOK(id, title, short_summary, summary, pages, publisher_id, isbn, p
 VALUES (1, 'Intro to Java book', '2nd edition', 'Dive in to learning java 8', 435, 1, '23423JIJI2', 20, 'LIKE_NEW',
         '2012-01-01', 1);
 
-INSERT INTO BOOK(id, title, summary, pages, publisher_id, isbn, price, published, version)
-VALUES (2, 'Jungle book', 'book about a boy', 334, 3, '443JJDFDF', 20, '2020-01-01', 1);
+INSERT INTO BOOK(id, title, summary, pages, publisher_id, isbn, price, book_condition, published, version)
+VALUES (2, 'Jungle book', 'book about a boy', 334, 3, '443JJDFDF', 20, 'POOR', '2020-01-01', 1);
 
 -- BOOK_AUTHOR
 INSERT INTO BOOK_AUTHOR(book_id, author_id)

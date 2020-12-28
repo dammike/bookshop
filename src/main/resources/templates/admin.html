@@ -55,34 +55,33 @@
         </div>
     </nav>
 
-    <h1>Admin Info</h1>
+    <h1>Administrators</h1>
     <a href="/admin/new">Create New Admin</a>
-    <table>
+    <table class="table">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Joined</th>
-            <th>email</th>
+            <th>Full Name</th>
             <th>username</th>
+            <th>Member Since</th>
+            <th>email</th>
             <th>address</th>
+            <th>&nbsp;</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="admin : ${admins}">
             <td th:text="${admin.firstName} + ' ' + ${admin.lastName}"/>
+            <td th:text="${admin.username}"/>
             <td th:text="${admin.joinedDate}"/>
             <td th:text="${admin.email}"/>
-            <td th:text="${admin.username}"/>
             <td>
-                        <span th:each="address : ${admin.addressDetails}">
-                            <i th:text="${address.streetNumber}"/>,
-                            <i th:text="${address.streetName}"/>, <br/>
-                            <i th:text="${address.suburb}"/>
-                            <i th:text="${address.city}"/> <br/>
-                            <i th:text="${address.province}"/>
-                            <i th:text="${address.country}"/> <br/>
-                            <i th:text="${address.zipCode}"/> <br/>
-                        </span>
+                <i th:text="${admin.addressDetails.streetNumber}"/>,
+                <i th:text="${admin.addressDetails.streetName}"/>, <br/>
+                <i th:text="${admin.addressDetails.suburb}"/>
+                <i th:text="${admin.addressDetails.city}"/> <br/>
+                <i th:text="${admin.addressDetails.province}"/>
+                <i th:text="${admin.addressDetails.country}"/> <br/>
+                <i th:text="${admin.addressDetails.zipCode}"/> <br/>
             <td/>
             <td>
                 <a th:href="@{'/admin/edit/' + ${admin.id}}">Edit</a>

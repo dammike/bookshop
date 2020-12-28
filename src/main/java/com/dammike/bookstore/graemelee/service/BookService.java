@@ -1,9 +1,6 @@
 package com.dammike.bookstore.graemelee.service;
 
-import com.dammike.bookstore.graemelee.model.Author;
-import com.dammike.bookstore.graemelee.model.Book;
-import com.dammike.bookstore.graemelee.model.Category;
-import com.dammike.bookstore.graemelee.model.Publisher;
+import com.dammike.bookstore.graemelee.model.*;
 import com.dammike.bookstore.graemelee.repository.AuthorRepository;
 import com.dammike.bookstore.graemelee.repository.BookRepository;
 import com.dammike.bookstore.graemelee.repository.CategoryRepository;
@@ -95,11 +92,6 @@ public class BookService {
     public List<Author> getAllAuthors() {
         List<Author> authors = new ArrayList<>();
         authorRepository.findAll().forEach(authors::add);
-        return authors;
-    }
-
-    public Set<Author> getAllAuthorsForBook(Book book) {
-        Set<Author> authors = new HashSet<>();
         return authors;
     }
 }

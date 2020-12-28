@@ -32,9 +32,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>Edit Book</h1>
-    <br/>
-
+    <h2 class="text-center" th:text="${book.isbn+ ' - ' + book.title}"/>
     <form action="#" th:action="@{/book/save}" th:object="${book}" method="post">
         <div class="form-group">
             <label for="id">Id</label>
@@ -65,7 +63,6 @@
         <div class="form-group">
             <label for="title" aria-describedby="titleSummary">Book Title</label>
             <input type="text" class="form-control" id="title" placeholder="Book title" th:field="*{title}"/>
-            <small id="titleSummary" class="form-text text-muted">A mini summary of the book goes here...</small>
             <small th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
         </div>
         <div class="form-group">
@@ -73,7 +70,7 @@
             <span th:each="author : ${book.authors}">
                 <small>
                     <b><i th:text="${author.firstName + ' ' + author.lastName}"/></b>
-                    <i th:if="${(autherStat != authorStat.size)? ', ' : 'None.'}"/>
+                    <i th:if="${(autherStat != book.authors.size)? ', ' : 'None.'}"/>
                 </small>
             </span>
 
@@ -85,15 +82,18 @@
             </select>
             <small th:if="${#fields.hasErrors('authors')}" th:errors="*{authors}"></small>
         </div>
-        <!-- <div class="form-group">
-             <label for="authors">Authors</label>
-             <input type="text" class="form-control" id="authors" placeholder="authors" th:field="*{authors}"/>
-
-         </div>-->
-        <div class="form-group">
-            <label for="publisher">Publisher</label>
-            <input type="text" class="form-control" id="publisher" placeholder="Publishers" th:field="*{publisher}"/>
-            <small th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></small>
+        <div class="form-group" th:object="${publisherList}">
+            <label th:for="single-select">Current Publisher</label>
+            <span>
+                <small>
+                    <b><i th:if="${(book.publisher==null)? book.publisher : book.publisher.name }"/></b>
+                </small>
+            </span>
+            <select class="form-control single-select" id="publisher" multiple="true" name="publisher">
+                <option th:each="publisher: ${publisherList}"
+                        th:text="${publisher.name}"
+                        th:value="${publisher.id}"></option>
+            </select>
         </div>
         <div class="form-group">
             <label for="pages">Number of Pages</label>
@@ -117,9 +117,20 @@
             <small th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></small>
         </div>
         <div class="form-group">
-            <label for="bookCondition">Book Condition</label>
-            <input type="text" class="form-control" id="bookCondition" th:field="*{bookCondition}"/>
-            <small th:if="${#fields.hasErrors('bookCondition')}" th:errors="*{bookCondition}"></small>
+            <label th:for="single-select">Current Book Condition</label>
+            <span>
+                <small>
+                    <b>
+                        <i th:text="${book.bookCondition}"/>
+                    <i th:if="${book.bookCondition == null} ? book.bookCondition : book.bookCondition.status"/></b>
+                </small>
+            </span>
+            <select class="form-control single-select" id="bookCondition" multiple="true" name="bookCondition">
+                <option th:each="bookCondition: ${T(com.dammike.bookstore.graemelee.model.BookCondition).values()}"
+                        th:text="${bookCondition +' - ' + bookCondition.status}"
+                        th:value="${bookCondition}"></option>
+                <small th:if="${#fields.hasErrors('bookCondition')}" th:errors="*{bookCondition}"></small>
+            </select>
         </div>
         <div class="form-group">
             <label for="available">In Stock</label>
@@ -150,6 +161,12 @@
                     tags: false,
                     tokenSeparators: ['/', ',', ';', " "],
                     maximumSelectionLength: 7,
+                    allowClear: true
+                });
+
+                $(".single-select").select2({
+                    maximumSelectionLength: 1,
+                    placeholder: 'Select Condition...',
                     allowClear: true
                 });
             })

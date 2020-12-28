@@ -1,6 +1,7 @@
 package com.dammike.bookstore.graemelee.web;
 
 import com.dammike.bookstore.graemelee.model.Book;
+import com.dammike.bookstore.graemelee.model.BookCondition;
 import com.dammike.bookstore.graemelee.repository.PublisherRepository;
 import com.dammike.bookstore.graemelee.service.BookService;
 import com.dammike.bookstore.graemelee.service.PublisherService;
@@ -70,6 +71,7 @@ public class BookController {
         log.debug("Ready to edit Book[" + book.getId() + "]");
         mv.addObject("book", book);
         mv.addObject("categoryList", bookService.getAllCategories());
+        mv.addObject("publisherList", publisherService.getAllPublishers());
         mv.addObject("authorList", bookService.getAllAuthors());
         return mv;
     }

@@ -63,8 +63,8 @@
             </select>
         </div>
         <div class="form-group" th:object="${publisherList}">
-            <label th:for="mul-select">Book Publisher</label>
-            <select class="form-control mul-select" id="publisher" multiple="true" name="publisher">
+            <label th:for="single-select">Book Publisher</label>
+            <select class="form-control single-select" id="publisher" multiple="true" name="publisher">
                 <option th:each="publisher: ${publisherList}"
                         th:text="${publisher.name}"
                         th:value="${publisher.id}"></option>
@@ -128,6 +128,12 @@
             tags: false,
             tokenSeparators: ['/', ',', ';', " "],
             maximumSelectionLength: 7,
+            allowClear: true
+        });
+
+        $(".single-select").select2({
+            maximumSelectionLength: 1,
+            placeholder: 'Select Condition...',
             allowClear: true
         });
     })
