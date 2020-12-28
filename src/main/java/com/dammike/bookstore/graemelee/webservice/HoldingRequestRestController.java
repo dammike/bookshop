@@ -42,7 +42,7 @@ public class HoldingRequestRestController {
     produces = {MediaType.APPLICATION_JSON_VALUE})
     public void updateHoldingRequest(@RequestBody HoldingRequest holdingRequest, @PathVariable Long id) {
         log.debug("Updating HoldingRequest: " + holdingRequest);
-        holdingRequestService.update(holdingRequest);
+        holdingRequestService.save(holdingRequest);
     }
 
 

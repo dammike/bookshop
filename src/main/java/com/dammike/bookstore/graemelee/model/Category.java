@@ -7,9 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +17,7 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id",
         scope = Category.class)
-@EqualsAndHashCode(exclude = {"books"})
+@EqualsAndHashCode(exclude = {"books"}, callSuper = true)
 @ToString(exclude = {"books"})
 public class Category extends BaseEntity {
     @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)

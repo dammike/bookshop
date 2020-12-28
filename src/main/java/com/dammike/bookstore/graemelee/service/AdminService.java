@@ -18,10 +18,6 @@ public class AdminService {
         adminRepository.save(admin);
     }
 
-    public void update(Admin admin) {
-        adminRepository.save(admin);
-    }
-
     public void delete(Long id) {
         Admin admin = adminRepository.findById(id).get();
         adminRepository.delete(admin);

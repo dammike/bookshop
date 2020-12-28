@@ -56,7 +56,7 @@ public class BookController {
             }
             return "new_book_form";
         }
-        log.debug("Saving Author for Book: [" + book.getAuthors() +"], ");
+        log.debug("Saving Book_Author for Book: [" + book.getAuthors() +"], ");
         log.debug("Saving Publisher for Book: [" + book.getPublisher() +"], ");
         bookService.save(book);
         log.debug("Saved Book[" + book.getId() + "]");

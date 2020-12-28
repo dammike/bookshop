@@ -38,7 +38,7 @@ class AdminServiceTest {
     public void testUpdatingAdmins() {
         Admin admin = adminService.getAdminByEmail("farq@email.com");
         admin.setEmail("something@yahoo.com");
-        adminService.update(admin);
+        adminService.save(admin);
         assertThrows(Exception.class, () -> {
             adminService.getAdminByEmail("farq@email.com");
         });
