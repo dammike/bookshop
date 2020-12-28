@@ -10,6 +10,8 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -45,6 +47,8 @@ public class Book extends BaseEntity {
 
     @Column(unique = true)
     private String isbn;
+    @NotEmpty(message = "Title Cannot be Blank")
+    @Size(min = 2, message = "Please Enter a Valid Title")
     @Column(unique = true, nullable = false)
     private String title;
     @Column(length = 1050)
@@ -58,8 +62,8 @@ public class Book extends BaseEntity {
     private int quantity;
     private BigDecimal price;
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date publishDate;
+    @DateTimeFormat(pattern = "yyyy")
+    private Date published;
     @Lob
     private Byte[] coverImage;
     @Enumerated(EnumType.STRING)
@@ -70,14 +74,14 @@ public class Book extends BaseEntity {
 
 
     public Book(Publisher publisher, String isbn, String title, String summary,
-                int pages, BigDecimal price, Date publishDate, BookCondition bookCondition) {
+        int pages, BigDecimal price, Date published, BookCondition bookCondition) {
         this.publisher = publisher;
         this.isbn = isbn;
         this.title = title;
         this.summary = summary;
         this.pages = pages;
         this.price = price;
-        this.publishDate = publishDate;
+        this.published = published;
         this.bookCondition = bookCondition;
     }
 }

@@ -3,6 +3,7 @@ package com.dammike.bookstore.graemelee.web;
 import com.dammike.bookstore.graemelee.model.Book;
 import com.dammike.bookstore.graemelee.repository.PublisherRepository;
 import com.dammike.bookstore.graemelee.service.BookService;
+import com.dammike.bookstore.graemelee.service.PublisherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +22,16 @@ import java.util.List;
 @RequestMapping("/book")
 public class BookController {
 
-    @Autowired
     private BookService bookService;
+    private PublisherService publisherService;
+
     @Autowired
-    private PublisherRepository publisherRepository;
+    public BookController(BookService bookService, PublisherService publisherService) {
+        this.bookService = bookService;
+        this.publisherService = publisherService;
+    }
 
     @GetMapping("/")
-
     public String getAllBooks(Model model) {
         List<Book> books = bookService.getAllBooks();
         model.addAttribute("books", books);
@@ -37,6 +41,9 @@ public class BookController {
     @GetMapping("/new")
     public String showNewBookForm(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("categoryList", bookService.getAllCategories());
+        model.addAttribute("publisherList", publisherService.getAllPublishers());
+        model.addAttribute("authorList", bookService.getAllAuthors());
         return "new_book_form";
     }
 
@@ -49,7 +56,8 @@ public class BookController {
             }
             return "new_book_form";
         }
-
+        log.debug("Saving Author for Book: [" + book.getAuthors() +"], ");
+        log.debug("Saving Publisher for Book: [" + book.getPublisher() +"], ");
         bookService.save(book);
         log.debug("Saved Book[" + book.getId() + "]");
         return "redirect:/book/";
@@ -61,6 +69,7 @@ public class BookController {
         Book book = bookService.getBookById(id);
         log.debug("Ready to edit Book[" + book.getId() + "]");
         mv.addObject("book", book);
+        mv.addObject("authorList", bookService.getAllAuthors());
         return mv;
     }
 

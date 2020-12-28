@@ -18,11 +18,6 @@ public class HoldingRequestService {
         holdingRequestRepository.save(holdingRequest);
     }
 
-    public void update(HoldingRequest holdingRequest) {
-        log.debug("Updating HoldingRequest: " + holdingRequest.getId());
-        holdingRequestRepository.save(holdingRequest);
-    }
-
     public void delete(Long id) {
         holdingRequestRepository.deleteById(id);
     }
