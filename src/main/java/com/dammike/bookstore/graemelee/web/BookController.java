@@ -1,6 +1,7 @@
 package com.dammike.bookstore.graemelee.web;
 
 import com.dammike.bookstore.graemelee.model.Book;
+import com.dammike.bookstore.graemelee.repository.PublisherRepository;
 import com.dammike.bookstore.graemelee.service.BookService;
 import com.dammike.bookstore.graemelee.service.PublisherService;
 import lombok.extern.slf4j.Slf4j;
