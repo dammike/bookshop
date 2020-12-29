@@ -1,6 +1,9 @@
 package com.dammike.bookstore.graemelee.service;
 
-import com.dammike.bookstore.graemelee.model.*;
+import com.dammike.bookstore.graemelee.model.Author;
+import com.dammike.bookstore.graemelee.model.Book;
+import com.dammike.bookstore.graemelee.model.Category;
+import com.dammike.bookstore.graemelee.model.Publisher;
 import com.dammike.bookstore.graemelee.repository.AuthorRepository;
 import com.dammike.bookstore.graemelee.repository.BookRepository;
 import com.dammike.bookstore.graemelee.repository.CategoryRepository;
@@ -11,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,13 +62,9 @@ public class BookService {
        return books;
     }
 
-    public List<Publisher> getAllPublishersForBook(Book book) {
-        List<Publisher> publishers = new ArrayList<>();
-        publisherRepository.findAll().forEach(publishers::add);
-
-        return publishers.stream().filter(publisher ->
-                publisher.getId() == book.getPublisher().getId())
-                .collect(Collectors.toList());
+    public Publisher getPublishersForBook(Book book) {
+        return publisherRepository.findPublisherByBooksContains(book)
+                .orElseThrow();
     }
 
     public void saveCoverImage(Long id, MultipartFile file) {
