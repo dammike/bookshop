@@ -14,6 +14,9 @@ VALUES (2, 'Richy', 'Clark' );
 INSERT INTO AUTHOR(id, first_name, last_name)
 VALUES (3, 'Anna', 'Lovelace' );
 
+INSERT INTO AUTHOR(id, first_name, last_name)
+VALUES (4, 'Rudyard', 'Kipling' );
+
 
 -- PUBLISHER
 INSERT INTO PUBLISHER(id, name, description)
@@ -42,7 +45,7 @@ VALUES (1, 'Intro to Java book', '2nd edition', 'Dive in to learning java 8', 43
         '2012-01-01', 1);
 
 INSERT INTO BOOK(id, title, summary, pages, publisher_id, isbn, price, book_condition, published, version)
-VALUES (2, 'Jungle book', 'book about a boy', 334, 3, '443JJDFDF', 20, 'POOR', '2020-01-01', 1);
+VALUES (2, 'The Jungle book', 'book about a boy', 334, 3, '9781400101207', 20, 'POOR', '2020-01-01', 1);
 
 -- BOOK_AUTHOR
 INSERT INTO BOOK_AUTHOR(book_id, author_id)
@@ -55,7 +58,7 @@ INSERT INTO BOOK_AUTHOR(book_id, author_id)
 VALUES(1, 3);
 
 INSERT INTO BOOK_AUTHOR(book_id, author_id)
-VALUES(2, 2);
+VALUES(2, 4);
 
 -- BOOK_CATEGORY
 INSERT INTO BOOK_CATEGORY(book_id, category_id)

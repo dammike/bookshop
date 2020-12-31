@@ -46,6 +46,7 @@ public class Book extends BaseEntity {
     @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private BookShelf bookShelf;
 
+    @Size(min = 10, max = 13, message = "Please enter a valid ISBN")
     @Column(unique = true)
     private String isbn;
     @NotEmpty(message = "Title Cannot be Blank")
@@ -56,8 +57,6 @@ public class Book extends BaseEntity {
     private String summary;
     @Column
     private String shortSummary;
-    @Column(columnDefinition = "boolean default true")
-    private boolean available;
     private int pages;
     @Column(columnDefinition = "integer default 1")
     private int quantity;
@@ -68,8 +67,10 @@ public class Book extends BaseEntity {
     @Lob
     private Byte[] coverImage;
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @NotNull(message = "book condition required")
     private BookCondition bookCondition;
+    @Column(columnDefinition = "boolean default true")
+    private boolean available;
     @Version
     @Column(name = "VERSION")
     private Long version = 0L;

@@ -1,6 +1,7 @@
 package com.dammike.bookstore.graemelee.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +22,7 @@ import java.util.Set;
 @ToString(exclude = {"books"})
 public class Category extends BaseEntity {
     @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Book> books = new HashSet<>();
     private String name;
 }

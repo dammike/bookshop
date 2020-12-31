@@ -1,9 +1,12 @@
 package com.dammike.bookstore.graemelee.web;
 
+import com.dammike.bookstore.graemelee.model.Author;
 import com.dammike.bookstore.graemelee.model.Book;
 import com.dammike.bookstore.graemelee.model.BookCondition;
 import com.dammike.bookstore.graemelee.repository.PublisherRepository;
+import com.dammike.bookstore.graemelee.service.AuthorService;
 import com.dammike.bookstore.graemelee.service.BookService;
+import com.dammike.bookstore.graemelee.service.CategoryService;
 import com.dammike.bookstore.graemelee.service.PublisherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +28,24 @@ public class BookController {
 
     private BookService bookService;
     private PublisherService publisherService;
+    private CategoryService categoryService;
+    private AuthorService authorService;
 
     @Autowired
-    public BookController(BookService bookService, PublisherService publisherService) {
+    public BookController(BookService bookService, PublisherService publisherService,
+                          CategoryService categoryService, AuthorService authorService) {
         this.bookService = bookService;
         this.publisherService = publisherService;
+        this.categoryService = categoryService;
+        this.authorService = authorService;
+    }
+
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        model.addAttribute("book", new Book());
+        model.addAttribute("categoryList", categoryService.getAllCategories());
+        model.addAttribute("publisherList", publisherService.getAllPublishers());
+        model.addAttribute("authorList", authorService.getAllAuthors());
     }
 
     @GetMapping("/")
@@ -40,11 +56,7 @@ public class BookController {
     }
 
     @GetMapping("/new")
-    public String showNewBookForm(Model model) {
-        model.addAttribute("book", new Book());
-        model.addAttribute("categoryList", bookService.getAllCategories());
-        model.addAttribute("publisherList", publisherService.getAllPublishers());
-        model.addAttribute("authorList", bookService.getAllAuthors());
+    public String showNewBookForm() {
         return "new_book_form";
     }
 
@@ -70,9 +82,6 @@ public class BookController {
         Book book = bookService.getBookById(id);
         log.debug("Ready to edit Book[" + book.getId() + "]");
         mv.addObject("book", book);
-        mv.addObject("categoryList", bookService.getAllCategories());
-        mv.addObject("publisherList", publisherService.getAllPublishers());
-        mv.addObject("authorList", bookService.getAllAuthors());
         return mv;
     }
 

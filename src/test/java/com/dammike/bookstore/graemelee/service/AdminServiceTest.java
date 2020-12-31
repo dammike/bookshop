@@ -56,11 +56,4 @@ class AdminServiceTest {
             adminService.getAdminByEmail("dom@gmail.com");
         });
     }
-
-    @AfterEach
-    public void destroy() {
-        adminService.getAllAdmins().forEach(admin -> {
-            adminService.delete(admin.getId());
-        });
-    }
 }
