@@ -1,7 +1,6 @@
 package com.dammike.bookstore.graemelee.webservice;
 
-import com.dammike.bookstore.graemelee.model.Book;
-import com.dammike.bookstore.graemelee.model.Publisher;
+import com.dammike.bookstore.graemelee.model.*;
 import com.dammike.bookstore.graemelee.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @Slf4j
@@ -18,7 +18,7 @@ public class BookRestController {
     @Autowired
     private BookService bookService;
 
-    @RequestMapping(value = {"/", "/{id}"})
+    @RequestMapping(value = {"", "/{id}"})
     public List<Book> getAllBooks(@PathVariable(required = false) Long id) {
         List<Book> books = new ArrayList<>();
         if (id == null) {
@@ -51,7 +51,24 @@ public class BookRestController {
     @GetMapping("/{bookId}/publisher")
     public Publisher getPublisherForBook(@PathVariable("bookId") Long bookId) {
         Book book = bookService.getBookById(bookId);
-        Publisher publisher = bookService.getPublishersForBook(book);
-        return publisher;
+        return book.getPublisher();
+    }
+
+    @GetMapping("/{bookId}/categories")
+    public Set<Category> getCategoriesForBook(@PathVariable("bookId") Long bookId) {
+        Book book = bookService.getBookById(bookId);
+        return book.getCategories();
+    }
+
+    @GetMapping("/{bookId}/authors")
+    public Set<Author> getAuthorsforBook(@PathVariable("bookId") Long bookId) {
+        Book book = bookService.getBookById(bookId);
+        return book.getAuthors();
+    }
+
+    @GetMapping("/{bookId}/bookcondition")
+    public BookCondition getBookConditionForBook(@PathVariable("bookId") Long bookId) {
+        Book book = bookService.getBookById(bookId);
+        return book.getBookCondition();
     }
 }
