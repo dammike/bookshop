@@ -21,7 +21,6 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/admin")
 public class AdminController {
-
     @Autowired
     private AdminService adminService;
 
@@ -50,7 +49,6 @@ public class AdminController {
         log.debug("Saved Admin[" + admin.getId() + "]");
         return "redirect:/admin/";
     }
-
 
     @RequestMapping("/edit/{id}")
     public ModelAndView showEditAdminForm(@PathVariable(name = "id") Long id) {

@@ -5,7 +5,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 
 @Configuration
-class StringToEnumConverterFactory implements ConverterFactory<String, Enum> {
+public class StringToEnumConverterFactory implements ConverterFactory<String, Enum> {
 
     public <T extends Enum> Converter<String, T> getConverter(Class<T> targetType) {
         return new StringToEnumConverter(targetType);

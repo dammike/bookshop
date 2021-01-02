@@ -21,46 +21,50 @@ import java.util.List;
 @RequestMapping("/publisher")
 public class PublisherController {
     @Autowired
-    private PublisherService publisherService;
+    private PublisherService service;
 
-    @RequestMapping("/")
-    public String getAllPublishers(Model model) {
-        List<Publisher> publishers = publisherService.getAllPublishers();
+    @RequestMapping(method = RequestMethod.GET,
+            value = "/")
+    public String getAll(Model model) {
+        List<Publisher> publishers = service.getAllPublishers();
         model.addAttribute("publishers", publishers);
         return "publisher";
     }
 
-    @RequestMapping("/new")
+    @RequestMapping(method = RequestMethod.GET,
+            value = "/new")
     public String showNewPublisherForm(Model model) {
         model.addAttribute("publisher", new Publisher());
         return "new_publisher_form";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/save")
-    public String savePublisher(@Valid @ModelAttribute("publisher") Publisher publisher, BindingResult bindingResult) {
+    @RequestMapping(method = RequestMethod.POST,
+            value = "/save")
+    public String save(@Valid @ModelAttribute("publisher") Publisher publisher, BindingResult bindingResult) {
         if (bindingResult.hasErrors()){
             if(publisher.getId() != null) {
                 return "edit_publisher_form";
             }
             return "new_publisher_form";
         }
-        publisherService.save(publisher);
+        service.save(publisher);
         log.debug("Saved Publisher[" + publisher.getId() + "]");
         return "redirect:/publisher/";
     }
 
-
-    @RequestMapping("/edit/{id}")
+    @RequestMapping(method = RequestMethod.PUT,
+            value = "/edit/{id}")
     public ModelAndView showEditPublisherForm(@PathVariable(name = "id") Long id) {
         ModelAndView mv = new ModelAndView("edit_publisher_form");
-        Publisher publisher = publisherService.getPublisherById(id);
+        Publisher publisher = service.getPublisherById(id);
         mv.addObject("publisher", publisher);
         return mv;
     }
 
-    @RequestMapping("/delete/{id}")
-    public String deletePublisher(@PathVariable(name = "id") Long id) {
-        publisherService.delete(id);
+    @RequestMapping(method = RequestMethod.DELETE,
+            value = "/delete/{id}")
+    public String delete(@PathVariable(name = "id") Long id) {
+        service.delete(id);
         log.debug("Deleted publisher[" + id + "]");
         return "redirect:/publisher/";
     }

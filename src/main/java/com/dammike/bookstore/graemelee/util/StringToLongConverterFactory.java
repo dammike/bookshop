@@ -6,7 +6,7 @@ import org.springframework.core.convert.converter.ConverterFactory;
 
 
 @Configuration
-class StringToLongConverterFactory implements ConverterFactory<String, Long> {
+public class StringToLongConverterFactory implements ConverterFactory<String, Long> {
 
     public <T extends Long> Converter<String, T> getConverter(Class<T> targetType) {
         return new StringToLongConverter(targetType);

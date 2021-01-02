@@ -17,7 +17,7 @@ public class AdminRestController {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping(value = {"/", "/{id}"})
+    @RequestMapping(value = {"", "/{id}"})
     public List<Admin> getAllAdmins(@PathVariable(required = false) Long id) {
         List<Admin> admins = new ArrayList<>();
         if (id == null) {
@@ -29,7 +29,7 @@ public class AdminRestController {
         return admins;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/")
+    @RequestMapping(method = RequestMethod.POST)
     public void addAdmin(@RequestBody Admin admin) {
         adminService.save(admin);
     }

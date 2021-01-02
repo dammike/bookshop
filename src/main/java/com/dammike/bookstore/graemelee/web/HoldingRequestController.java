@@ -11,13 +11,12 @@ import java.util.List;
 
 @Controller
 public class HoldingRequestController {
-
     @Autowired
-    private HoldingRequestService holdingRequestService;
+    private HoldingRequestService service;
 
     @RequestMapping("/holdingrequests")
-    public String getAllHoldingRequests(Model model) {
-        List<HoldingRequest> holdingRequests = holdingRequestService.findAll();
+    public String getAll(Model model) {
+        List<HoldingRequest> holdingRequests = service.findAll();
         model.addAttribute(holdingRequests);
         return "holding_requests";
     }

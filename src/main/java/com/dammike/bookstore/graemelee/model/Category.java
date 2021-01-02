@@ -8,7 +8,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.PreUpdate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,4 +29,9 @@ public class Category extends BaseEntity {
     @JsonIgnore
     private Set<Book> books = new HashSet<>();
     private String name;
+
+    @PreUpdate
+    public void onModification() {
+        this.modified = new Date();
+    }
 }

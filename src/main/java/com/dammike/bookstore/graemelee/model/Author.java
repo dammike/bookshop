@@ -8,7 +8,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.PreUpdate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,5 +32,10 @@ public class Author extends NamedEntity {
     public Author(String firstName, String lastName) {
         setFirstName(firstName);
         setLastName(lastName);
+    }
+
+    @PreUpdate
+    public void onModification() {
+        this.modified = new Date();
     }
 }

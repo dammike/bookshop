@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -16,18 +16,17 @@ public class Admin extends User {
     @Temporal(TemporalType.TIME)
     private Date totalHrsOnline;
 
-    @PrePersist()
-    private void initJoinedDate() {
-        setJoinedDate(new Date());
-    }
-
     public Admin(String firstName, String lastName, String username, String password, String email) {
-
         setFirstName(firstName);
         setLastName(lastName);
         setUsername(username);
         setPassword(password);
         setEmail(email);
         setJoinedDate(new Date());
+    }
+
+    @PreUpdate
+    public void onModification() {
+        this.modified = new Date();
     }
 }

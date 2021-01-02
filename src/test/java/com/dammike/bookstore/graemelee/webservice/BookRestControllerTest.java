@@ -5,7 +5,7 @@ import com.dammike.bookstore.graemelee.model.BookCondition;
 import com.dammike.bookstore.graemelee.model.Publisher;
 import com.dammike.bookstore.graemelee.repository.BookRepository;
 import com.dammike.bookstore.graemelee.service.BookService;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,8 +16,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class BookRestControllerTest {

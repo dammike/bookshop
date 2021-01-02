@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,5 +28,10 @@ public class Publisher extends BaseEntity{
     public Publisher(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    @PreUpdate
+    public void onModification() {
+        this.modified = new Date();
     }
 }

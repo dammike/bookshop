@@ -1,6 +1,6 @@
 package com.dammike.bookstore.graemelee.service;
 
-import com.dammike.bookstore.graemelee.model.*;
+import com.dammike.bookstore.graemelee.model.Book;
 import com.dammike.bookstore.graemelee.repository.AuthorRepository;
 import com.dammike.bookstore.graemelee.repository.BookRepository;
 import com.dammike.bookstore.graemelee.repository.CategoryRepository;
@@ -8,13 +8,15 @@ import com.dammike.bookstore.graemelee.repository.PublisherRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j

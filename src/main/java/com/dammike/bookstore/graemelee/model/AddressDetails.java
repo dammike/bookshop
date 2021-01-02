@@ -7,6 +7,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 @Data
 public class AddressDetails {
+    private String unitNumber;
     private String streetNumber;
     private String streetName;
     private String suburb;

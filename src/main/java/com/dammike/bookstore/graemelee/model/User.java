@@ -21,7 +21,6 @@ public abstract class User extends NamedEntity {
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     @Temporal(TemporalType.DATE)
     private Date birthDate;
-
     @Column(nullable = false, unique = true)
     @Email(message = "Please provide a valid email address.",
             regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
@@ -47,7 +46,9 @@ public abstract class User extends NamedEntity {
             @AttributeOverride( name = "areaCode", column = @Column(name = "phoneAreaCode")),
             @AttributeOverride( name = "phoneNumber", column = @Column(name = "phonePhoneNumber"))
     })
+
     private ContactDetails phoneNumber;
+
     @Embedded
     @AttributeOverrides({
             @AttributeOverride( name = "countryCode", column = @Column(name = "mobileCountryCode")),

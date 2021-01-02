@@ -1,7 +1,6 @@
 package com.dammike.bookstore.graemelee.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,8 +11,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class BookShelf extends BaseEntity {
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Admin.class,
-            optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY, targetEntity = Admin.class)
     private Admin admin;
     @OneToOne(optional = false, fetch = FetchType.LAZY, targetEntity = Book.class)
     @JoinColumn(name = "book_id")
@@ -25,5 +23,9 @@ public class BookShelf extends BaseEntity {
     private String column;
     @Column(name = "shelf_row", nullable = false)
     private String row;
-    private Date lastUpdated;
+
+    @PreUpdate
+    public void onModification() {
+        this.modified = new Date();
+    }
 }

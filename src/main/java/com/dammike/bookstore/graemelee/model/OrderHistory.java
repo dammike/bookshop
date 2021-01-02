@@ -1,12 +1,10 @@
 package com.dammike.bookstore.graemelee.model;
 
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.PreUpdate;
 import java.util.Date;
 
 @Entity
@@ -16,6 +14,9 @@ public class OrderHistory extends BaseEntity{
     private Consumer customer;
     @ManyToOne
     private Book book;
-    @CreationTimestamp
-    private Date orderPlacedOn;
+
+    @PreUpdate
+    public void onModification() {
+        this.modified = new Date();
+    }
 }
