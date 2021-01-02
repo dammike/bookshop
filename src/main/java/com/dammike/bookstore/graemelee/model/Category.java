@@ -1,6 +1,7 @@
 package com.dammike.bookstore.graemelee.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,6 +11,8 @@ import lombok.ToString;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.PreUpdate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,10 +22,16 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id",
         scope = Category.class)
-@EqualsAndHashCode(exclude = {"books"})
+@EqualsAndHashCode(exclude = {"books"}, callSuper = true)
 @ToString(exclude = {"books"})
 public class Category extends BaseEntity {
     @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set<Book> books = new HashSet<>();
     private String name;
+
+    @PreUpdate
+    public void onModification() {
+        this.modified = new Date();
+    }
 }

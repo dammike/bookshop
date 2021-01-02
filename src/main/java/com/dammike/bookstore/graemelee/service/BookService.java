@@ -1,9 +1,6 @@
 package com.dammike.bookstore.graemelee.service;
 
-import com.dammike.bookstore.graemelee.model.Author;
 import com.dammike.bookstore.graemelee.model.Book;
-import com.dammike.bookstore.graemelee.model.Category;
-import com.dammike.bookstore.graemelee.model.Publisher;
 import com.dammike.bookstore.graemelee.repository.AuthorRepository;
 import com.dammike.bookstore.graemelee.repository.BookRepository;
 import com.dammike.bookstore.graemelee.repository.CategoryRepository;
@@ -11,11 +8,15 @@ import com.dammike.bookstore.graemelee.repository.PublisherRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -35,8 +36,8 @@ public class BookService {
         this.authorRepository = authorRepository;
     }
 
-    public Book save(Book book) {
-        return bookRepository.save(book);
+    public void save(Book book) {
+        bookRepository.save(book);
     }
 
     public Book getBookByTitle(String title) {
@@ -60,15 +61,6 @@ public class BookService {
        return books;
     }
 
-    public List<Publisher> getAllPublishersForBook(Book book) {
-        List<Publisher> publishers = new ArrayList<>();
-        publisherRepository.findAll().forEach(publishers::add);
-
-        return publishers.stream().filter(publisher ->
-                publisher.getId() == book.getPublisher().getId())
-                .collect(Collectors.toList());
-    }
-
     public void saveCoverImage(Long id, MultipartFile file) {
         try {
             Book book = bookRepository.findById(id).orElseThrow();
@@ -84,22 +76,5 @@ public class BookService {
         } catch (IOException e) {
             log.error("Error occurred", e);
         }
-    }
-
-    public List<Category> getAllCategories() {
-        List<Category> categories = new ArrayList<>();
-        categoryRepository.findAll().forEach(categories::add);
-        return categories;
-    }
-
-    public List<Author> getAllAuthors() {
-        List<Author> authors = new ArrayList<>();
-        authorRepository.findAll().forEach(authors::add);
-        return authors;
-    }
-
-    public Set<Author> getAllAuthorsForBook(Book book) {
-        Set<Author> authors = new HashSet<>();
-        return authors;
     }
 }

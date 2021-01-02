@@ -11,13 +11,13 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api")
+@RequestMapping("/api/admins")
 public class AdminRestController {
 
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping(value = {"/admins", "/admins/{id}"})
+    @RequestMapping(value = {"", "/{id}"})
     public List<Admin> getAllAdmins(@PathVariable(required = false) Long id) {
         List<Admin> admins = new ArrayList<>();
         if (id == null) {
@@ -29,17 +29,17 @@ public class AdminRestController {
         return admins;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/admins")
+    @RequestMapping(method = RequestMethod.POST)
     public void addAdmin(@RequestBody Admin admin) {
         adminService.save(admin);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/admins/{id}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     public void updateAdmin(@RequestBody Admin admin, @PathVariable Long id) {
         adminService.save(admin);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/admins/{id}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public void deleteAdmin(@PathVariable Long id) {
         adminService.delete(id);
     }

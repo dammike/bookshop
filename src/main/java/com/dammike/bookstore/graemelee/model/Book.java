@@ -10,7 +10,9 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -45,6 +47,7 @@ public class Book extends BaseEntity {
     @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private BookShelf bookShelf;
 
+    @Size(min = 10, max = 13, message = "Please enter a valid ISBN")
     @Column(unique = true)
     private String isbn;
     @NotEmpty(message = "Title Cannot be Blank")
@@ -55,11 +58,11 @@ public class Book extends BaseEntity {
     private String summary;
     @Column
     private String shortSummary;
-    @Column(columnDefinition = "boolean default true")
-    private boolean available;
     private int pages;
     @Column(columnDefinition = "integer default 1")
     private int quantity;
+    @Column(precision = 6)
+    @Digits(integer = 6, fraction = 2, message = "Please enter a valid price")
     private BigDecimal price;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy")
@@ -67,14 +70,16 @@ public class Book extends BaseEntity {
     @Lob
     private Byte[] coverImage;
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "book condition required")
     private BookCondition bookCondition;
-    @Version
-    @Column(name = "VERSION")
-    private Long version = 0L;
-
+    @Column(columnDefinition = "boolean default true")
+    private boolean available;
+    @Column(columnDefinition = "boolean default false")
+    private boolean withdrawn;
+    private Date modified;
 
     public Book(Publisher publisher, String isbn, String title, String summary,
-        int pages, BigDecimal price, Date published, BookCondition bookCondition) {
+                int pages, BigDecimal price, Date published, BookCondition bookCondition) {
         this.publisher = publisher;
         this.isbn = isbn;
         this.title = title;
@@ -83,6 +88,13 @@ public class Book extends BaseEntity {
         this.price = price;
         this.published = published;
         this.bookCondition = bookCondition;
+        this.available = true;
+        this.withdrawn = false;
+    }
+
+    @PreUpdate
+    public void onModification() {
+        this.modified = new Date();
     }
 }
 

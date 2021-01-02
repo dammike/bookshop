@@ -32,9 +32,10 @@
 </head>
 <body>
 <div class="container">
-    <h1>Edit Book</h1>
-    <br/>
-
+    <div class="text-center">
+        <h2 th:text="${book.title +' ('+ book.published + ')'}"/>
+        <small class="text-center text-muted" th:text="${'ISBN ' + book.isbn}"/>
+    </div>
     <form action="#" th:action="@{/book/save}" th:object="${book}" method="post">
         <div class="form-group">
             <label for="id">Id</label>
@@ -43,22 +44,39 @@
             <input type="hidden" th:field="*{version}"/>
         </div>
         <div class="form-group">
+            <label th:for="mul-select">Current Categories</label>
+            <small class="text-danger" th:errors="*{categories}" th:if="${#fields.hasErrors('categories')}"></small>
+            <span th:each="category : ${book.categories}">
+                <small>
+                    <b><i th:text="${category.name}"/></b>
+                    <i th:if="${categoryStat != categoryStat.size} ? ', ' : 'None.'"/>
+                </small>
+            </span>
+
+            <select class="form-control mul-select" id="categories" multiple="true" name="categories"
+                    th:object="${categoryList}">
+                <option th:each="category: ${categoryList}"
+                        th:text="${category.name}"
+                        th:value="${category.id}"></option>
+            </select>
+        </div>
+        <div class="form-group">
             <label for="isbn">ISBN</label>
+            <small class="text-danger" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></small>
             <input class="form-control" id="isbn" name="isbn" th:field="*{isbn}" type="text"/>
-            <small th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></small>
         </div>
         <div class="form-group">
             <label for="title" aria-describedby="titleSummary">Book Title</label>
+            <small class="danger-text" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
             <input type="text" class="form-control" id="title" placeholder="Book title" th:field="*{title}"/>
-            <small id="titleSummary" class="form-text text-muted">A mini summary of the book goes here...</small>
-            <small th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
         </div>
         <div class="form-group">
             <label th:for="mul-select">Current Author(s)</label>
+            <small class="danger-text" th:if="${#fields.hasErrors('authors')}" th:errors="*{authors}"></small>
             <span th:each="author : ${book.authors}">
                 <small>
                     <b><i th:text="${author.firstName + ' ' + author.lastName}"/></b>
-                    <i th:if="${(autherStat != authorStat.size)? ', ' : 'None.'}"/>
+                    <i th:if="${(autherStat != book.authors.size)? ', ' : 'None.'}"/>
                 </small>
             </span>
 
@@ -68,61 +86,177 @@
                         th:value="${author.id}">
                 </option>
             </select>
-            <small th:if="${#fields.hasErrors('authors')}" th:errors="*{authors}"></small>
         </div>
-        <!-- <div class="form-group">
-             <label for="authors">Authors</label>
-             <input type="text" class="form-control" id="authors" placeholder="authors" th:field="*{authors}"/>
-
-         </div>-->
         <div class="form-group">
-            <label for="publisher">Publisher</label>
-            <input type="text" class="form-control" id="publisher" placeholder="Publishers" th:field="*{publisher}"/>
-            <small th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></small>
+            <label th:for="single-select">Current Publisher</label>
+            <small class="danger-text" th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}"></small>
+            <span>
+                <small>
+                    <b><i th:if="${(book.publisher==null)? book.publisher : book.publisher.name }"/></b>
+                </small>
+            </span>
+            <select class="form-control single-select" id="publisher" multiple="true" name="publisher"
+                    th:object="${publisherList}">
+                <option th:each="publisher: ${publisherList}"
+                        th:text="${publisher.name}"
+                        th:value="${publisher.id}"></option>
+            </select>
         </div>
         <div class="form-group">
             <label for="pages">Number of Pages</label>
+            <small class="danger-text" th:if="${#fields.hasErrors('pages')}" th:errors="*{pages}"></small>
             <input type="text" class="form-control" id="pages" th:field="*{pages}"/>
-            <small th:if="${#fields.hasErrors('pages')}" th:errors="*{pages}"></small>
         </div>
         <div class="form-group">
             <label for="price">Price</label>
+            <small class="danger-text" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
             <input type="text" class="form-control" id="price" th:field="*{price}"/>
-            <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
         </div>
         <div class="form-group">
             <label for="published">Year</label>
+            <small class="text-danger" th:errors="*{published}" th:if="${#fields.hasErrors('published')}"></small>
             <input type="text" class="form-control yearpicker" id="published" placeholder="Published Year"
                    th:field="*{published}"/>
-            <small class="bg-danger" th:errors="*{published}" th:if="${#fields.hasErrors('published')}"></small>
         </div>
         <div class="form-group">
             <label for="quantity">Quantity</label>
+            <small class="danger-text" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></small>
             <input type="text" class="form-control" id="quantity" th:field="*{quantity}" placeholder="Number of Copies Available"/>
-            <small th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></small>
         </div>
         <div class="form-group">
-            <label for="bookCondition">Book Condition</label>
-            <input type="text" class="form-control" id="bookCondition" th:field="*{bookCondition}"/>
-            <small th:if="${#fields.hasErrors('bookCondition')}" th:errors="*{bookCondition}"></small>
+            <label th:for="single-select">Current Book Condition</label>
+            <small class="text-danger" th:if="${#fields.hasErrors('bookCondition')}"
+                   th:errors="*{bookCondition}"></small>
+            <span>
+                <small>
+                    <b>
+                        <i id="condition" th:text="${book.bookCondition}"/>
+                    <i th:if="${book.bookCondition == null} ? book.bookCondition : book.bookCondition.status"/></b>
+                </small>
+            </span>
+            <select class="form-control single-select" id="bookCondition" multiple="true" name="bookCondition">
+                <option th:each="bookCondition: ${T(com.dammike.bookstore.graemelee.model.BookCondition).values()}"
+                        th:text="${bookCondition +' - ' + bookCondition.status}"
+                        th:value="${bookCondition}"></option>
+            </select>
         </div>
         <div class="form-group">
             <label for="available">In Stock</label>
+            <small class="danger-text" th:if="${#fields.hasErrors('available')}" th:errors="*{available}"></small>
             <input type="text" class="form-control" id="available" placeholder="Book Availability "
                    th:field="*{available}"/>
-            <small th:if="${#fields.hasErrors('available')}" th:errors="*{available}"></small>
         </div>
         <div class="form-group">
             <label for="summary">Summary</label>
+            <small class="danger-text" th:if="${#fields.hasErrors('summary')}" th:errors="*{summary}"></small>
             <textarea class="form-control" id="summary" rows="3" th:field="*{summary}"></textarea>
-            <small th:if="${#fields.hasErrors('summary')}" th:errors="*{summary}"></small>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
+
     </form>
 
     <script>
             $(document).ready(function () {
+
+                // Categories
+                // Fetch the preselected item, and add to the control
+                var categoriesSelect = $('#categories');
+                var bookId = $('#id').text();
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/books/' + bookId + '/categories'
+                }).then(function (data) {
+                    // create the option and append to Select2
+                    jQuery.each(data, function(index, itemData) {
+                        var option = new Option(itemData.name, itemData.id, true, true);
+                        categoriesSelect.append(option).trigger('change');
+                    });
+
+
+                    // manually trigger the `select2:select` event
+                    categoriesSelect.trigger({
+                        type: 'select2:select',
+                        params: {
+                            data: data
+                        }
+                    });
+                });
+
+
+
+                // Authors
+                // Fetch the preselected item, and add to the control
+                var authorsSelect = $('#authors');
+                var bookId = $('#id').text();
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/books/' + bookId + '/authors'
+                }).then(function (data) {
+                    // create the option and append to Select2
+                    jQuery.each(data, function(index, itemData) {
+                        var option = new Option(itemData.firstName +' '+ itemData.lastName, itemData.id, true, true);
+                        authorsSelect.append(option).trigger('change');
+                    });
+
+
+                    // manually trigger the `select2:select` event
+                    authorsSelect.trigger({
+                        type: 'select2:select',
+                        params: {
+                            data: data
+                        }
+                    });
+                });
+
+
+
+                // Book Condition
+                // Fetch the preselected item, and add to the control
+                var bookConditionSelect = $('#bookCondition');
+                var bookId = $('#id').text();
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/books/' + bookId + '/bookcondition'
+                }).then(function (data) {
+                    // create the option and append to Select2
+                    var option = new Option(data, data, true, true);
+                    bookConditionSelect.append(option).trigger('change');
+
+                    // manually trigger the `select2:select` event
+                    bookConditionSelect.trigger({
+                        type: 'select2:select',
+                        params: {
+                            data: data
+                        }
+                    });
+                });
+
+
+                //Publisher
+                // Fetch the preselected item, and add to the control
+                var publisherSelect = $('#publisher');
+                var bookId = $('#id').text();
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/books/' + bookId + '/publisher'
+                }).then(function (data) {
+                    // create the option and append to Select2
+                    if (data.id != null) {
+
+                        var option = new Option(data.name, data.id, true, true);
+                        publisherSelect.append(option).trigger('change');
+
+                        // manually trigger the `select2:select` event
+                        publisherSelect.trigger({
+                            type: 'select2:select',
+                            params: {
+                                data: data
+                            }
+                        });
+                    }
+                });
+
 
                 $(".yearpicker").yearpicker({
                     year: 2021,
@@ -131,10 +265,16 @@
                 });
 
                 $(".mul-select").select2({
-                    placeholder: "select category",
+                    placeholder: "Please Select...",
                     tags: false,
                     tokenSeparators: ['/', ',', ';', " "],
                     maximumSelectionLength: 7,
+                    allowClear: true
+                });
+
+                $(".single-select").select2({
+                    maximumSelectionLength: 1,
+                    placeholder: 'Select Condition...',
                     allowClear: true
                 });
             })

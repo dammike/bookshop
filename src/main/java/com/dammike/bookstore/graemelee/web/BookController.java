@@ -1,8 +1,9 @@
 package com.dammike.bookstore.graemelee.web;
 
 import com.dammike.bookstore.graemelee.model.Book;
-import com.dammike.bookstore.graemelee.repository.PublisherRepository;
+import com.dammike.bookstore.graemelee.service.AuthorService;
 import com.dammike.bookstore.graemelee.service.BookService;
+import com.dammike.bookstore.graemelee.service.CategoryService;
 import com.dammike.bookstore.graemelee.service.PublisherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,29 +22,37 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/book")
 public class BookController {
-
-    private BookService bookService;
+    private BookService service;
     private PublisherService publisherService;
+    private CategoryService categoryService;
+    private AuthorService authorService;
 
     @Autowired
-    public BookController(BookService bookService, PublisherService publisherService) {
-        this.bookService = bookService;
+    public BookController(BookService service, PublisherService publisherService,
+                          CategoryService categoryService, AuthorService authorService) {
+        this.service = service;
         this.publisherService = publisherService;
+        this.categoryService = categoryService;
+        this.authorService = authorService;
+    }
+
+    @ModelAttribute
+    private void addAttributes(Model model) {
+        model.addAttribute("book", new Book());
+        model.addAttribute("categoryList", categoryService.getAllCategories());
+        model.addAttribute("publisherList", publisherService.getAllPublishers());
+        model.addAttribute("authorList", authorService.getAllAuthors());
     }
 
     @GetMapping("/")
     public String getAllBooks(Model model) {
-        List<Book> books = bookService.getAllBooks();
+        List<Book> books = service.getAllBooks();
         model.addAttribute("books", books);
         return "book";
     }
 
     @GetMapping("/new")
-    public String showNewBookForm(Model model) {
-        model.addAttribute("book", new Book());
-        model.addAttribute("categoryList", bookService.getAllCategories());
-        model.addAttribute("publisherList", publisherService.getAllPublishers());
-        model.addAttribute("authorList", bookService.getAllAuthors());
+    public String showNewBookForm() {
         return "new_book_form";
     }
 
@@ -56,9 +65,9 @@ public class BookController {
             }
             return "new_book_form";
         }
-        log.debug("Saving Author for Book: [" + book.getAuthors() +"], ");
+        log.debug("Saving Book_Author for Book: [" + book.getAuthors() +"], ");
         log.debug("Saving Publisher for Book: [" + book.getPublisher() +"], ");
-        bookService.save(book);
+        service.save(book);
         log.debug("Saved Book[" + book.getId() + "]");
         return "redirect:/book/";
     }
@@ -66,16 +75,15 @@ public class BookController {
     @GetMapping("/edit/{id}")
     public ModelAndView showEditAdminForm(@PathVariable(name = "id") Long id) {
         ModelAndView mv = new ModelAndView("edit_book_form");
-        Book book = bookService.getBookById(id);
+        Book book = service.getBookById(id);
         log.debug("Ready to edit Book[" + book.getId() + "]");
         mv.addObject("book", book);
-        mv.addObject("authorList", bookService.getAllAuthors());
         return mv;
     }
 
     @RequestMapping("/delete/{id}")
     public String deleteBook(@PathVariable(name = "id") Long id) {
-        bookService.delete(id);
+        service.delete(id);
         log.debug("Deleted Book[" + id + "]");
         return "redirect:/book/";
     }
@@ -91,7 +99,7 @@ public class BookController {
         if (id == null) {
 
         }
-        bookService.saveCoverImage(id, file);
+        service.saveCoverImage(id, file);
         return "redirect:/book/";
     }
 }

@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.PreUpdate;
 import java.util.Date;
 
 @Entity
@@ -18,4 +19,9 @@ public class Reviews extends BaseEntity {
     @CreationTimestamp
     private Date placedOn;
     private int rating;
+
+    @PreUpdate
+    public void onModification() {
+        this.modified = new Date();
+    }
 }

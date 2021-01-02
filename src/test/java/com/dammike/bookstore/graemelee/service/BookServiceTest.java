@@ -48,7 +48,7 @@ class BookServiceTest {
     public void testUpdatingBooks() {
         Book result = bookService.getBookByTitle("Eat healthy 40 steps");
         result.setTitle("Eat happily");
-        bookService.updateBook(result);
+        bookService.save(result);
         assertThrows(Exception.class, () -> {
             bookService.getBookByTitle("Eat healthy 40 steps");
         });

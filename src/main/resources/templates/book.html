@@ -32,9 +32,9 @@
     <title>Book Store</title>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img th:src="@{/images/bookicon.png}" alt="" width="30" height="24" class="d-inline-block align-top">
@@ -88,12 +88,12 @@
     <div>
         <form action="#" method="post" th:action="@{/book/}" th:object="${books}">
 
-            <table>
+            <table class="table">
                 <thead>
                 <tr>
                     <th>Book ID</th>
                     <th>Title</th>
-                    <th>Author</th>
+                    <th>Author(s)</th>
                     <th>Publisher</th>
                     <th>Categories</th>
                     <th>Year</th>
@@ -109,8 +109,10 @@
                     <td>
                         <span th:text="${book.title}"/>
                     </td>
-                    <td th:each="author : ${book.authors}">
-                        <span th:text="${author.firstName + ' ' + author.lastName}"/> <br/>
+                    <td>
+                        <span th:each="author : ${book.authors}">
+                            <i th:text="${author.firstName + ' ' + author.lastName}"/> <br/>
+                        </span>
                     </td>
                     <td>
                         <span th:text="${(book.publisher != null)? book.publisher.name : book.publisher}"/>

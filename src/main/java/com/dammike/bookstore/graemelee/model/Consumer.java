@@ -3,7 +3,9 @@ package com.dammike.bookstore.graemelee.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,6 +18,8 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id",
         scope = Consumer.class)
+@EqualsAndHashCode(exclude = "interestedCategories")
+@ToString(exclude = "interestedCategories")
 public class Consumer extends User {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
@@ -35,5 +39,10 @@ public class Consumer extends User {
         setEmail(email);
         this.birthDate = birthDate;
         this.clubMember = clubMember;
+    }
+
+    @PreUpdate
+    public void onModification() {
+        this.modified = new Date();
     }
 }
