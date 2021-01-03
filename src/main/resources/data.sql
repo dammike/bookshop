@@ -39,13 +39,13 @@ INSERT INTO CATEGORY(id, name)
 VALUES(3, 'HEALTHY LIVING');
 
 -- BOOK
-INSERT INTO BOOK(id, title, short_summary, summary, pages, publisher_id, isbn, price, book_condition, published, available, withdrawn,
+INSERT INTO BOOK(id, title, short_summary, summary, pages, publisher_id, isbn, price, book_condition, published, available, withdrawn, created,
                  version)
 VALUES (1, 'Intro to Java book', '2nd edition', 'Dive in to learning java 8', 435, 1, '23423JIJI2', 20, 'LIKE_NEW',
-        '2012-01-01', true, false, 1);
+        '2012-01-01', true, false, '2012-08-17', 1);
 
-INSERT INTO BOOK(id, title, summary, pages, publisher_id, isbn, price, book_condition, published, available, withdrawn, version)
-VALUES (2, 'The Jungle book', 'book about a boy', 334, 3, '9781400101207', 20, 'POOR', '2020-01-01', true, false, 1);
+INSERT INTO BOOK(id, title, summary, pages, publisher_id, isbn, price, book_condition, published, available, withdrawn, created, version)
+VALUES (2, 'The Jungle book', 'book about a boy', 334, 3, '9781400101207', 20, 'POOR', '2020-01-01', true, false, '2010-01-03', 1);
 
 -- BOOK_AUTHOR
 INSERT INTO BOOK_AUTHOR(book_id, author_id)

@@ -36,13 +36,7 @@ public class BookController {
         this.authorService = authorService;
     }
 
-    @ModelAttribute
-    private void addAttributes(Model model) {
-        model.addAttribute("book", new Book());
-        model.addAttribute("categoryList", categoryService.getAllCategories());
-        model.addAttribute("publisherList", publisherService.getAllPublishers());
-        model.addAttribute("authorList", authorService.getAllAuthors());
-    }
+
 
     @GetMapping("/")
     public String getAllBooks(Model model) {
